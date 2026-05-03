@@ -1,0 +1,1752 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>Acrux Gym | Ghaziabad</title>
+    <meta name="description" content="A real gym for real people in Vishnu Garden, Loni, Ghaziabad. Expert trainers, solid equipment, and a community that pushes you forward.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Cormorant+Garamond:wght@300;400;500;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #f5f0e8;
+            --bg2: #ede8df;
+            --bg3: #e6dfd3;
+            --card: #faf7f2;
+            --text: #1c1a16;
+            --text2: #5c4d3a;
+            --text3: #9a8a76;
+            --accent: #7a5c2e;
+            --accent2: #a07840;
+            --accentl: rgba(122,92,46,0.10);
+            --accentl2: rgba(122,92,46,0.06);
+            --border: rgba(122,92,46,0.14);
+            --border2: rgba(122,92,46,0.28);
+            --shadow: 0 4px 12px rgba(0,0,0,0.05);
+            --shadow2: 0 24px 56px rgba(0,0,0,0.08);
+            --card2: var(--bg3);
+            
+            --chip-w-bg: rgba(122,92,46,0.16);
+            --chip-w-color: var(--accent);
+            --chip-c-bg: rgba(180,70,50,0.14);
+            --chip-c-color: #b84832;
+            --chip-y-bg: rgba(50,120,70,0.14);
+            --chip-y-color: #327846;
+            --chip-f-bg: rgba(50,70,180,0.14);
+            --chip-f-color: #3246b4;
+            --chip-b-bg: rgba(110,50,170,0.14);
+            --chip-b-color: #6e32aa;
+        }
+
+        html[data-theme="dark"] {
+            --bg: #111009;
+            --bg2: #181510;
+            --bg3: #201c14;
+            --card: #1c1814;
+            --text: #f0ebe0;
+            --text2: #c4b49a;
+            --text3: #8a7a66;
+            --accent: #c9a84c;
+            --accent2: #e0c068;
+            --accentl: rgba(201,168,76,0.08);
+            --accentl2: rgba(201,168,76,0.05);
+            --border: rgba(201,168,76,0.12);
+            --border2: rgba(201,168,76,0.24);
+            --shadow: 0 4px 12px rgba(0,0,0,0.2);
+            --shadow2: 0 24px 56px rgba(0,0,0,0.3);
+            --card2: var(--bg3);
+            
+            --chip-w-bg: rgba(201,168,76,0.16);
+            --chip-w-color: var(--accent);
+            --chip-c-bg: rgba(220,100,80,0.14);
+            --chip-c-color: #dc6450;
+            --chip-y-bg: rgba(80,160,110,0.14);
+            --chip-y-color: #50a06e;
+            --chip-f-bg: rgba(90,110,220,0.14);
+            --chip-f-color: #5a6edc;
+            --chip-b-bg: rgba(160,90,230,0.14);
+            --chip-b-color: #a05ae6;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; cursor: none; }
+        @media (max-width: 1024px) { * { cursor: auto !important; } #cur-dot, #cur-ring { display: none !important; } }
+        
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background-color: var(--bg);
+            color: var(--text);
+            overflow-x: hidden;
+        }
+
+        /* High Performance Transitions - ONLY targeting specific elements to prevent layout thrashing */
+        body, .navbar, .nav-inner, .f-card, .stats-bar, .info-box, .prog-card, .modal-box, .t-front, .t-back, .pricing-card, .p-extra-card, .testi-card, .c-input, .footer, .section-bg2, .arnold-card, .arnold-overlay {
+            transition: background-color 0.38s ease, color 0.38s ease, border-color 0.38s ease, box-shadow 0.38s ease;
+        }
+
+        /* Custom Cursor */
+        #cur-dot, #cur-ring { position: fixed; border-radius: 50%; pointer-events: none; z-index: 10002; top: 0; left: 0; }
+        #cur-dot { width: 6px; height: 6px; background: var(--accent); margin: -3px 0 0 -3px; }
+        #cur-ring { width: 28px; height: 28px; border: 1.5px solid var(--accent); margin: -14px 0 0 -14px; will-change: transform; transition: opacity 0.2s ease; }
+        body.cursor-active #cur-ring { opacity: 0.6; }
+
+        /* Scroll Progress */
+        #scroll-prog { position: fixed; top: 0; left: 0; height: 2px; z-index: 10000; background: var(--accent); width: 0%; transition: width 0.08s linear; will-change: width; }
+
+        /* Loading Screen */
+        #loader { position: fixed; inset: 0; background: var(--bg); z-index: 100000; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: transform 0.6s cubic-bezier(0.16,1,0.3,1), opacity 0.6s ease; }
+        .loader-acrux { display: flex; }
+        .loader-acrux span { font-family: 'Playfair Display', serif; font-weight: 900; font-size: 80px; color: var(--accent); opacity: 0; transform: translateY(24px); animation: loadIn 0.8s forwards; }
+        @keyframes loadIn { to { opacity: 1; transform: translateY(0); } }
+        .loader-sub { font-family: 'DM Sans', sans-serif; font-size: 11px; letter-spacing: 0.4em; color: var(--text3); opacity: 0; animation: fadeSub 0.8s 0.7s forwards; margin-top: 10px; }
+        @keyframes fadeSub { to { opacity: 1; } }
+
+        /* Floating Controls Removed */
+
+        /* Reveal Utils */
+        .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.65s cubic-bezier(0.16,1,0.3,1), transform 0.65s cubic-bezier(0.16,1,0.3,1); }
+        .reveal.visible { opacity: 1; transform: none; }
+        .from-left { transform: translateX(-40px); }
+        .from-right { transform: translateX(40px); }
+        .from-bottom { transform: translateY(60px); }
+        .scale-in { transform: scale(0.92); }
+        .d1 { transition-delay: 0.1s; }
+        .d2 { transition-delay: 0.2s; }
+        .d3 { transition-delay: 0.3s; }
+        .d4 { transition-delay: 0.4s; }
+        .d5 { transition-delay: 0.5s; }
+
+        /* Navbar */
+        .navbar { position: fixed; top: 0; left: 0; width: 100%; height: 72px; z-index: 1000; display: flex; justify-content: center; align-items: center; padding: 0 48px; transition: height 0.3s ease, background 0.3s ease, backdrop-filter 0.3s ease, border-bottom 0.3s ease; }
+        .nav-inner { width: 100%; max-width: 1200px; display: flex; justify-content: space-between; align-items: center; margin-left: 56px; margin-right: 56px; }
+        .navbar.scrolled { height: 54px; backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
+        .nav-logo { display: flex; align-items: center; text-decoration: none; }
+        .nav-logo img { height: 38px; width: auto; object-fit: contain; }
+        .nav-links { display: flex; gap: 32px; }
+        .nav-link { font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text2); text-decoration: none; position: relative; padding: 8px 0; transition: color 0.3s ease; }
+        .nav-link::after { content: ""; position: absolute; bottom: 0; left: 0; width: 100%; height: 1px; background: var(--accent); transform: scaleX(0); transform-origin: left; transition: transform 0.3s ease, background 0.38s ease; }
+        .nav-link:hover, .nav-link.active { color: var(--accent); }
+        .nav-link:hover::after, .nav-link.active::after { transform: scaleX(1); }
+        .btn-join { font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; background: var(--accent); color: var(--bg); padding: 10px 22px; border-radius: 3px; text-decoration: none; border: none; transition: background 0.38s ease, color 0.38s ease, transform 0.3s ease; display: inline-block; }
+        .btn-join:hover { transform: translateY(-2px); }
+        
+        .hamburger { display: none; background: none; border: none; flex-direction: column; gap: 5px; width: 30px; z-index: 1001; }
+        .hamburger span { height: 2px; width: 100%; background: var(--text); transition: transform 0.3s ease, opacity 0.3s ease, background 0.38s ease; }
+        .hamburger.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+        .mobile-nav { position: fixed; top: 0; right: -100%; width: 100%; height: 100vh; background: var(--bg); z-index: 999; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 24px; transition: right 0.4s cubic-bezier(0.16,1,0.3,1), background 0.38s ease; }
+        .mobile-nav.open { right: 0; }
+        .mobile-nav .nav-link { font-family: 'Playfair Display', serif; font-size: 32px; letter-spacing: normal; text-transform: none; }
+
+        /* Typography & Globals */
+        .h2-title { font-family: 'Playfair Display', serif; font-weight: 900; font-size: clamp(34px, 4vw, 50px); line-height: 1.1; margin-bottom: 24px; transition: color 0.38s ease; }
+        .body-text { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 19px; line-height: 1.78; color: var(--text2); margin-bottom: 40px; transition: color 0.38s ease; }
+        .text-center { text-align: center; }
+        .section { padding: 120px 48px; max-width: 1200px; margin: 0 auto; }
+        .section-bg2 { background: var(--bg2); padding: 120px 48px; }
+        .section-bg2 .container { max-width: 1200px; margin: 0 auto; }
+
+        /* Section 1: Hero (Redesigned) */
+        .hero { position: relative; min-height: 100vh; display: flex; justify-content: center; align-items: center; overflow: hidden; padding-top: 72px; }
+        .hero-img-wrap { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 900px; height: 90vh; display: flex; justify-content: center; align-items: flex-end; z-index: 2; pointer-events: none; }
+        .hero-img { height: 100%; width: 100%; object-fit: contain; object-position: bottom center; opacity: 0; animation: fadeUpHero 1.2s cubic-bezier(0.16,1,0.3,1) 0.5s forwards; will-change: transform, opacity; }
+        html[data-theme="dark"] .hero-img { filter: brightness(0.85); }
+        @keyframes fadeUpHero { from { opacity: 0; transform: translateY(50px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .hero-content { position: relative; z-index: 1; text-align: center; pointer-events: none; width: 100%; padding: 0 24px; }
+        .hero-headline { font-family: 'Playfair Display', serif; font-weight: 900; font-size: clamp(38px, 8vw, 110px); line-height: 1; color: var(--text); text-transform: uppercase; text-shadow: 0 8px 48px rgba(245, 240, 232, 0.95), 0 0 100px rgba(245, 240, 232, 1); transition: color 0.38s ease, text-shadow 0.38s ease; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px; margin-top: -60px; }
+        html[data-theme="dark"] .hero-headline { text-shadow: 0 8px 48px rgba(17, 16, 9, 0.95), 0 0 100px rgba(17, 16, 9, 1); }
+        .hero-headline .line-inner { display: flex; justify-content: center; align-items: center; width: 100%; gap: 2vw; }
+        .hero-headline .word { flex: 1; text-align: center; }
+        .hero-headline .h-line2 { color: var(--accent); }
+        .hero-headline .h-your { flex: 0.5; color: var(--text2); opacity: 0.9; }
+        
+        /* Floating Cards Removed */
+
+        /* Stats Bar */
+        .stats-bar { position: relative; z-index: 3; display: flex; justify-content: center; gap: 48px; background: var(--card); padding: 36px 48px; border-radius: 20px; box-shadow: var(--shadow2); border: 1px solid var(--border); margin: -64px auto 64px auto; max-width: 1000px; width: 90%; }
+        .stat-item { flex: 1; border-right: 1px solid var(--border); padding: 0 24px; text-align: center; transition: border-color 0.38s ease; }
+        .stat-item:first-child { padding-left: 0; }
+        .stat-item:last-child { border-right: none; padding-right: 0; }
+        .stat-num { font-family: 'Playfair Display', serif; font-weight: 900; font-size: 32px; color: var(--accent); line-height: 1.2; transition: color 0.38s ease; }
+        .stat-label { font-family: 'DM Sans', sans-serif; font-size: 12px; color: var(--text3); margin-top: 4px; transition: color 0.38s ease; }
+
+        /* Buttons Update */
+        .btn-primary { background: var(--accent); color: var(--bg); font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; padding: 16px 38px; border-radius: 3px; border: none; position: relative; overflow: hidden; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; z-index: 1; transition: background 0.38s ease, color 0.38s ease, transform 0.3s ease; }
+        .btn-primary::after { content: ""; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: rgba(255,255,255,0.2); transform: rotate(45deg) translateX(-100%); transition: transform 0.6s ease; z-index: -1; }
+        .btn-primary:hover { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(122,92,46,0.3); }
+        .btn-primary:hover::after { transform: rotate(45deg) translateX(100%); }
+
+        /* Section 2: About */
+        .about-grid { display: grid; grid-template-columns: 55% 45%; gap: 80px; align-items: center; }
+        .label-small { font-family: 'DM Sans', sans-serif; font-size: 10px; letter-spacing: 0.35em; color: var(--accent); text-transform: uppercase; transition: color 0.38s ease; }
+        .gold-rule { width: 48px; height: 2px; background: var(--accent); margin: 12px 0 24px 0; transition: background 0.38s ease; }
+        .info-boxes { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .info-box { background: var(--card); border-left: 2.5px solid var(--accent); border-radius: 0 6px 6px 0; padding: 24px; transition: transform 0.4s ease, box-shadow 0.4s ease; }
+        .info-box:hover { transform: translateX(8px); box-shadow: var(--shadow); }
+        .info-box h4 { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 16px; color: var(--text2); margin-bottom: 8px; transition: color 0.38s ease; }
+        .info-box p { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 16px; color: var(--text2); line-height: 1.65; transition: color 0.38s ease; }
+        
+        /* Arnold Golden Era Section */
+        .arnold-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 48px; }
+        .arnold-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; position: relative; cursor: pointer; }
+        .arnold-card:hover { transform: translateY(-8px); box-shadow: 0 24px 48px var(--shadow2); border-color: var(--accent); }
+        .arnold-img-wrap { height: 400px; overflow: hidden; position: relative; }
+        .arnold-img { width: 100%; height: 100%; object-fit: cover; object-position: top center; transition: transform 1.2s cubic-bezier(0.16,1,0.3,1), filter 0.8s ease; filter: grayscale(100%) contrast(1.15); }
+        .arnold-card:hover .arnold-img { transform: scale(1.08); filter: grayscale(0%) contrast(1.05); }
+        .arnold-overlay { position: absolute; inset: 0; background: linear-gradient(to top, var(--card) 0%, transparent 80%); }
+        .arnold-quote { padding: 32px 40px 48px; font-family: 'Playfair Display', serif; font-size: 21px; font-style: italic; color: var(--text); line-height: 1.6; position: relative; z-index: 2; margin-top: -60px; transition: color 0.38s ease; }
+
+        /* Section 3: Programs */
+        .programs-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 52px; }
+        .prog-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 36px; position: relative; overflow: hidden; text-decoration: none; color: inherit; display: block; transition: transform 0.4s cubic-bezier(0.16,1,0.3,1), box-shadow 0.4s ease, border-color 0.4s ease, background 0.38s ease; }
+        .prog-card::before { content: ""; position: absolute; inset: 0; background: var(--accentl); opacity: 0; transition: opacity 0.4s ease, background 0.38s ease; z-index: 0; }
+        .prog-card:hover { transform: translateY(-12px); box-shadow: 0 24px 56px var(--shadow2); border-color: var(--accent); }
+        .prog-card:hover::before { opacity: 1; }
+        .prog-card > * { position: relative; z-index: 1; }
+        .prog-icon { width: 48px; height: 48px; background: var(--accentl2); border-radius: 10px; display: flex; justify-content: center; align-items: center; font-size: 26px; margin-bottom: 24px; transition: transform 0.4s ease, background 0.38s ease; }
+        .prog-card:hover .prog-icon { transform: scale(1.1) rotate(5deg); background: var(--accent); color: var(--bg); }
+        .prog-title { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 22px; margin-bottom: 12px; transition: color 0.38s ease; }
+        .prog-desc { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 17px; color: var(--text2); line-height: 1.7; margin-bottom: 20px; transition: color 0.38s ease; }
+        .prog-sched { font-family: 'DM Sans', sans-serif; font-size: 12px; color: var(--text3); margin-bottom: 20px; transition: color 0.38s ease; }
+        .prog-link { font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; color: var(--accent); display: flex; align-items: center; gap: 6px; transition: color 0.38s ease; }
+        .prog-link span { transition: transform 0.3s ease; }
+        .prog-card:hover .prog-link span { transform: translateX(6px); }
+
+        /* Section 4: Schedule */
+        .sched-wrapper { overflow-x: auto; border: 1px solid var(--border); border-radius: 12px; margin-top: 48px; transition: border-color 0.38s ease; }
+        .sched { width: 100%; border-collapse: collapse; min-width: 800px; }
+        .sched th { font-family: 'DM Sans', sans-serif; font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; background: var(--accent); color: var(--bg); text-align: center; padding: 16px; border: 1px solid var(--border); transition: background 0.38s ease, color 0.38s ease, border-color 0.38s ease; }
+        .sched th.today { background: var(--accent2); }
+        .sched td { border: 1px solid var(--border); vertical-align: top; min-height: 56px; padding: 8px; width: calc(100% / 8); transition: border-color 0.38s ease, background 0.38s ease; }
+        .sched td.time-col { font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.1em; color: var(--text3); text-align: right; padding: 12px 16px; background: var(--bg3); width: 80px; transition: color 0.38s ease, background 0.38s ease; }
+        .sched td.today { background: var(--accentl2); }
+        .chip { display: block; border-radius: 6px; padding: 6px 10px; font-size: 12px; font-weight: 500; font-family: 'DM Sans', sans-serif; text-align: center; margin-bottom: 6px; transition: opacity 0.2s ease, transform 0.2s ease, background 0.38s ease, color 0.38s ease; cursor: pointer; }
+        .chip:hover { opacity: 0.9; transform: scale(1.05); }
+        .chip-w { background: var(--chip-w-bg); color: var(--chip-w-color); }
+        .chip-c { background: var(--chip-c-bg); color: var(--chip-c-color); }
+        .chip-y { background: var(--chip-y-bg); color: var(--chip-y-color); }
+        .chip-f { background: var(--chip-f-bg); color: var(--chip-f-color); }
+        .chip-b { background: var(--chip-b-bg); color: var(--chip-b-color); }
+        
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); z-index: 5000; display: flex; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: opacity 0.35s ease; }
+        .modal-overlay.active { opacity: 1; pointer-events: all; }
+        .modal-box { background: var(--card); border: 1px solid var(--border2); border-radius: 16px; padding: 48px; max-width: 480px; width: 90%; transform: scale(0.94); transition: transform 0.4s cubic-bezier(0.16,1,0.3,1), background 0.38s ease, border-color 0.38s ease; position: relative; box-shadow: 0 32px 64px rgba(0,0,0,0.2); }
+        .modal-overlay.active .modal-box { transform: scale(1); }
+        .modal-close { position: absolute; top: 24px; right: 24px; font-family: 'DM Sans', sans-serif; color: var(--text3); background: none; border: none; font-size: 18px; padding: 8px; cursor: pointer; transition: color 0.3s ease, transform 0.3s ease; }
+        .modal-close:hover { color: var(--accent); transform: rotate(90deg); }
+        .modal-title { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 28px; margin-bottom: 16px; color: var(--text); transition: color 0.38s ease; }
+        .modal-pill { display: inline-block; padding: 6px 14px; background: var(--accentl); color: var(--accent); border-radius: 20px; font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 500; margin-bottom: 24px; transition: background 0.38s ease, color 0.38s ease; }
+        .modal-desc { font-family: 'Cormorant Garamond', serif; font-size: 18px; color: var(--text2); line-height: 1.7; margin-bottom: 32px; transition: color 0.38s ease; }
+
+        /* Section 5: Trainers */
+        .trainers-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; margin-top: 52px; }
+        .t-card { height: 460px; perspective: 1200px; }
+        .t-inner { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.8s cubic-bezier(0.16,1,0.3,1); }
+        @media(min-width: 1025px) { .t-card:hover .t-inner { transform: rotateY(180deg); } }
+        .t-card.flipped .t-inner { transform: rotateY(180deg); }
+        .t-face { position: absolute; inset: 0; backface-visibility: hidden; border-radius: 16px; overflow: hidden; box-shadow: var(--shadow); }
+        .t-front { background: var(--card); border: 1px solid var(--border); display: flex; flex-direction: column; align-items: center; padding: 56px 24px 32px; }
+        .t-avatar { width: 120px; height: 120px; border-radius: 50%; border: 2px solid var(--accent); display: flex; justify-content: center; align-items: center; font-family: 'DM Sans', sans-serif; font-weight: 900; font-size: 34px; background: var(--accentl2); color: var(--accent); margin-bottom: 32px; animation: avatarFloat 5s ease-in-out infinite; will-change: transform; transition: background 0.38s ease, color 0.38s ease, border-color 0.38s ease; }
+        .t-name { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 24px; margin-bottom: 8px; color: var(--text); transition: color 0.38s ease; }
+        .t-title { font-family: 'DM Sans', sans-serif; font-size: 12px; letter-spacing: 0.12em; font-weight: 500; text-transform: uppercase; color: var(--accent); text-align: center; transition: color 0.38s ease; }
+        .t-hint { font-family: 'DM Sans', sans-serif; font-size: 11px; color: var(--text3); margin-top: auto; transition: color 0.38s ease; }
+        .t-back { background: var(--accent); color: var(--bg); transform: rotateY(180deg); padding: 40px; display: flex; flex-direction: column; }
+        .t-back-name { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 22px; margin-bottom: 16px; color: var(--bg); transition: color 0.38s ease; }
+        .t-back-bio { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 17px; line-height: 1.7; color: rgba(255,255,255,0.9); margin-bottom: 24px; transition: color 0.38s ease; }
+        html[data-theme="dark"] .t-back-bio { color: rgba(0,0,0,0.85); }
+        .t-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; }
+        .t-tag { font-family: 'DM Sans', sans-serif; font-size: 10px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; background: rgba(255,255,255,0.2); color: rgba(255,255,255,0.95); padding: 6px 12px; border-radius: 20px; transition: background 0.38s ease, color 0.38s ease; }
+        html[data-theme="dark"] .t-tag { background: rgba(0,0,0,0.2); color: rgba(0,0,0,0.95); }
+
+        /* Section 6: Pricing */
+        .plans-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-top: 56px; }
+        .plan-card { background: var(--card); border: 1.5px solid var(--border2); border-radius: 20px; padding: 40px 28px; position: relative; overflow: hidden; box-shadow: var(--shadow); display: flex; flex-direction: column; transition: transform 0.4s cubic-bezier(0.16,1,0.3,1), box-shadow 0.4s ease, border-color 0.4s ease; }
+        .plan-card:hover { transform: translateY(-10px); box-shadow: 0 32px 64px rgba(0,0,0,0.12); border-color: var(--accent); }
+        .plan-card.featured { border-color: var(--accent); background: var(--accentl2); }
+        .plan-card.featured:hover { box-shadow: 0 32px 64px rgba(139,109,56,0.2); }
+        .p-accent-bar { position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--border2); transition: background 0.38s ease; }
+        .plan-card.featured .p-accent-bar { background: var(--accent); }
+        .plan-badge { font-family: 'DM Sans', sans-serif; font-size: 10px; font-weight: 600; letter-spacing: 0.25em; text-transform: uppercase; background: var(--accent); color: var(--bg); padding: 5px 14px; border-radius: 24px; display: inline-block; margin-bottom: 24px; transition: background 0.38s ease, color 0.38s ease; }
+        .plan-badge.best { background: var(--accent); }
+        .plan-duration { font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text3); margin-bottom: 16px; transition: color 0.38s ease; }
+        .plan-price { font-family: 'Playfair Display', serif; font-weight: 900; font-size: 52px; line-height: 1; color: var(--accent); transition: color 0.38s ease; }
+        .plan-price sup { font-size: 22px; vertical-align: super; }
+        .plan-saving { font-family: 'DM Sans', sans-serif; font-size: 12px; color: #4caf72; font-weight: 600; margin-top: 8px; min-height: 20px; }
+        .plan-divider { height: 1px; background: var(--border); margin: 24px 0; transition: background 0.38s ease; }
+        .plan-features { display: flex; flex-direction: column; gap: 12px; flex: 1; }
+        .plan-feature { display: flex; gap: 10px; align-items: flex-start; }
+        .p-check { width: 20px; height: 20px; background: var(--accentl2); border: 1px solid var(--border2); border-radius: 50%; color: var(--accent); font-family: 'DM Sans', sans-serif; font-size: 11px; display: flex; justify-content: center; align-items: center; flex-shrink: 0; transform: scale(0); transition: transform 0.5s cubic-bezier(0.16,1,0.3,1), background 0.38s ease, border-color 0.38s ease; }
+        .p-check.visible { transform: scale(1); }
+        .p-text { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 16px; color: var(--text); line-height: 1.4; transition: color 0.38s ease; }
+        .plan-cta { margin-top: 28px; display: block; text-align: center; font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; padding: 14px 20px; border-radius: 3px; text-decoration: none; border: 1.5px solid var(--accent); color: var(--accent); transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease; }
+        .plan-cta:hover { background: var(--accent); color: var(--bg); transform: translateY(-2px); }
+        .plan-card.featured .plan-cta { background: var(--accent); color: var(--bg); }
+        .plan-card.featured .plan-cta:hover { opacity: 0.85; }
+        @media (max-width: 900px) { .plans-grid { grid-template-columns: 1fr 1fr; gap: 20px; } }
+        @media (max-width: 560px) { .plans-grid { grid-template-columns: 1fr; } }
+
+        /* Section 7: Testimonials */
+        .testi-wrap { margin-top: 64px; overflow: hidden; -webkit-mask: linear-gradient(90deg, transparent, black 7%, black 93%, transparent); mask: linear-gradient(90deg, transparent, black 7%, black 93%, transparent); padding: 20px 0; }
+        .testi-track { display: flex; gap: 32px; width: max-content; animation: scroll 42s linear infinite; will-change: transform; }
+        .testi-track:hover { animation-play-state: paused; }
+        @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        .testi-card { width: 400px; flex-shrink: 0; background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 40px; transition: transform 0.4s ease, box-shadow 0.4s ease; cursor: pointer; box-shadow: var(--shadow); }
+        .testi-card:hover { transform: translateY(-8px) scale(1.02); box-shadow: 0 20px 40px var(--shadow2); border-color: var(--accent); }
+        .testi-q { font-family: 'Playfair Display', serif; font-weight: 900; font-size: 72px; line-height: 0.5; color: var(--accent); opacity: 0.4; margin-bottom: 20px; transition: color 0.38s ease; }
+        .testi-text { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 19px; line-height: 1.72; color: var(--text); transition: color 0.38s ease; }
+        .testi-div { height: 1px; background: var(--border); margin: 24px 0; transition: background 0.38s ease; }
+        .testi-name { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 17px; color: var(--text); transition: color 0.38s ease; }
+        .testi-since { font-family: 'DM Sans', sans-serif; font-size: 12px; color: var(--text3); margin-top: 4px; transition: color 0.38s ease; }
+        .testi-stars { font-family: 'DM Sans', sans-serif; letter-spacing: 2px; color: var(--accent); font-size: 15px; margin-top: 10px; transition: color 0.38s ease; }
+
+        /* Section 8: Contact */
+        .contact-grid { display: grid; grid-template-columns: 40% 60%; gap: 72px; margin-top: 64px; }
+        .c-info-item { margin-bottom: 24px; }
+        .c-label { font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 500; letter-spacing: 0.35em; color: var(--text3); text-transform: uppercase; margin-bottom: 6px; transition: color 0.38s ease; }
+        .c-val { font-family: 'Cormorant Garamond', serif; font-size: 19px; color: var(--text); transition: color 0.38s ease; }
+        .hours-table { width: 100%; border-collapse: collapse; }
+        .hours-table tr { border-bottom: 1px solid var(--border); transition: border-color 0.38s ease; }
+        .hours-table td { padding: 12px 0; }
+        .hours-table td:first-child { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 17px; color: var(--text2); transition: color 0.38s ease; }
+        .hours-table td:last-child { font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 17px; color: var(--accent); text-align: right; transition: color 0.38s ease; }
+        .walk-in { background: var(--accentl2); border: 1px solid var(--border); border-radius: 10px; padding: 20px 24px; margin-top: 32px; font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 16px; color: var(--text2); line-height: 1.6; transition: background 0.38s ease, border-color 0.38s ease, color 0.38s ease; }
+        
+        .c-form { display: flex; flex-direction: column; gap: 20px; }
+        .c-field { position: relative; }
+        .c-input { width: 100%; background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 16px 20px; font-family: 'Cormorant Garamond', serif; font-size: 18px; color: var(--text); outline: none; transition: border-color 0.3s ease, box-shadow 0.3s ease, background 0.38s ease, color 0.38s ease; }
+        .c-input:focus { border-color: var(--accent); box-shadow: 0 0 0 4px var(--accentl); }
+        .c-input.valid { border-color: #4caf72; }
+        .c-input.error { border-color: #c0392b; box-shadow: 0 0 0 4px rgba(192, 57, 43, 0.1); }
+        .c-err-msg { font-family: 'DM Sans', sans-serif; font-size: 12px; color: #c0392b; margin-top: 8px; opacity: 0; transform: translateY(-5px); transition: opacity 0.3s ease, transform 0.3s ease; display: none; }
+        .c-field.has-error .c-err-msg { display: block; opacity: 1; transform: translateY(0); }
+        .btn-submit { width: 100%; margin-top: 12px; font-size: 13px; padding: 18px; transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease; }
+        .btn-submit.success { background: #4caf72; color: #fff; pointer-events: none; }
+
+        /* Footer */
+        .footer { background: #0c0a07; padding: 80px 48px 40px; position: relative; }
+        .f-top { position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--accent); transition: background 0.38s ease; }
+        .f-container { max-width: 1200px; margin: 0 auto; }
+        .f-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 64px; padding-bottom: 56px; border-bottom: 1px solid rgba(255,255,255,0.08); }
+        .f-logo { font-family: 'Playfair Display', serif; font-weight: 900; font-size: 26px; color: #c9a84c; }
+        .f-tagline { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 17px; margin-top: 12px; color: #777; }
+        .f-desc { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 16px; line-height: 1.8; margin-top: 16px; color: #666; max-width: 320px; }
+        .f-heading { font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 500; letter-spacing: 0.3em; color: #c9a84c; margin-bottom: 24px; }
+        .f-link { font-family: 'DM Sans', sans-serif; font-size: 14px; color: #888; text-decoration: none; display: inline-block; padding: 6px 0; transition: color 0.3s ease, transform 0.3s ease; }
+        .f-link:hover { color: #c9a84c; transform: translateX(4px); }
+        .f-info { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 16px; line-height: 2; color: #888; }
+        .f-bottom { margin-top: 32px; text-align: center; font-family: 'DM Sans', sans-serif; font-size: 13px; color: #555; }
+
+        /* Back to Top */
+        .back-top { position: fixed; bottom: 32px; right: 32px; width: 48px; height: 48px; background: var(--accent); color: var(--bg); border: none; border-radius: 50%; font-family: 'DM Sans', sans-serif; font-size: 20px; display: flex; justify-content: center; align-items: center; z-index: 500; opacity: 0; transform: translateY(10px); transition: opacity 0.3s ease, transform 0.3s ease, background 0.3s ease; pointer-events: none; box-shadow: 0 8px 24px rgba(0,0,0,0.15); }
+        .back-top.visible { opacity: 1; transform: translateY(0); pointer-events: all; cursor: pointer; }
+        .back-top:hover { transform: translateY(-5px); background: var(--accent2); box-shadow: 0 12px 32px rgba(0,0,0,0.25); }
+
+        @media (max-width: 768px) {
+            .nav-links, .btn-join { display: none; }
+            .hamburger { display: flex; }
+            .about-grid, .contact-grid, .arnold-grid { grid-template-columns: 1fr; gap: 48px; }
+            .programs-grid, .trainers-grid { grid-template-columns: 1fr; gap: 32px; }
+            .counters-row { grid-template-columns: 1fr 1fr; gap: 32px; }
+            .f-grid { grid-template-columns: 1fr; gap: 40px; }
+            .p-extra-grid { grid-template-columns: 1fr; }
+            .hero { padding-top: 54px; }
+            .hero-img-wrap { height: 70vh; }
+            .hero-headline { font-size: clamp(40px, 12vw, 64px); padding: 0 16px; }
+            .fc-1 { top: 15%; left: 5%; transform: scale(0.8); }
+            .fc-2 { top: 15%; right: 5%; transform: scale(0.8); }
+            .fc-3 { bottom: 5%; left: 5%; transform: scale(0.8); }
+            .fc-4 { bottom: 5%; right: 5%; transform: scale(0.8); }
+            .section, .section-bg2 { padding: 80px 24px; }
+            .navbar { padding: 0 24px; }
+            .nav-inner { margin-left: 0; margin-right: 0; }
+            .theme-toggle { top: 16px; right: 70px; }
+            .mute-btn { top: 12px; left: 16px; }
+            .pricing-card { padding: 40px 24px; }
+            .stats-bar { flex-wrap: wrap; gap: 32px; padding: 24px; margin: -32px auto 48px auto; }
+            .stat-item { border-right: none; padding: 0; min-width: 40%; }
+            .arnold-img-wrap { height: 300px; }
+            .arnold-quote { font-size: 18px; padding: 24px 24px 32px; margin-top: -40px; }
+            .f-card:hover { transform: scale(0.85) translateY(-10px) !important; }
+        }
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .programs-grid { grid-template-columns: 1fr 1fr; }
+            .trainers-grid { grid-template-columns: 1fr 1fr; }
+            .hero-img-wrap { height: 80vh; }
+            .fc-1 { left: 8%; } .fc-2 { right: 8%; }
+            .fc-3 { left: 10%; } .fc-4 { right: 10%; }
+        }
+    
+        /* Advanced Workout Maker Styles */
+        .achip {
+            padding: 10px 18px; border: 1px solid var(--border); border-radius: 20px;
+            font-family: 'DM Sans', sans-serif; font-size: 14px; cursor: pointer;
+            transition: all 0.3s ease; color: var(--text2); background: var(--card);
+        }
+        .achip.active { background: var(--accent); color: var(--bg); border-color: var(--accent); }
+        .achip:hover:not(.active) { background: var(--bg2); }
+        
+        .dtab {
+            padding: 12px 20px; border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 14px;
+            font-weight: 500; cursor: pointer; white-space: nowrap; transition: all 0.2s;
+            background: var(--bg2); color: var(--text2); border: 1px solid transparent;
+        }
+        .dtab.active { background: var(--accent); color: var(--bg); }
+        .dtab.rest { background: transparent; border: 1px dashed var(--border2); opacity: 0.7; }
+        .dtab.rest.active { opacity: 1; border-color: var(--accent); color: var(--accent); }
+
+        .ex-card {
+            background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+            padding: 16px; margin-bottom: 12px; cursor: pointer; transition: all 0.3s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+        }
+        .ex-card:hover { border-color: var(--border2); transform: translateY(-2px); }
+        .ex-header { display: flex; justify-content: space-between; align-items: center; }
+        .ex-title { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 600; color: var(--text); }
+        .ex-badge { font-family: 'DM Sans', sans-serif; font-size: 11px; padding: 4px 8px; border-radius: 4px; background: var(--bg2); color: var(--text3); text-transform: uppercase; letter-spacing: 0.05em; }
+        .ex-details { display: flex; gap: 16px; margin-top: 8px; font-family: 'DM Sans', sans-serif; font-size: 13px; color: var(--text2); }
+        
+        .ex-body { display: none; margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border); }
+        .ex-body p { font-family: 'Cormorant Garamond', serif; font-size: 17px; color: var(--text2); line-height: 1.5; margin-bottom: 8px; }
+        .ex-body strong { color: var(--text); }
+
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+<body>
+
+    <!-- Loading Screen -->
+    <div id="loader">
+        <div class="loader-acrux">
+            <span style="animation-delay: 0ms">A</span>
+            <span style="animation-delay: 120ms">C</span>
+            <span style="animation-delay: 240ms">R</span>
+            <span style="animation-delay: 360ms">U</span>
+            <span style="animation-delay: 480ms">X</span>
+        </div>
+        <div class="loader-sub">GYM &middot; GHAZIABAD</div>
+    </div>
+
+    <!-- UI Controls -->
+    <div id="scroll-prog"></div>
+    
+    <div id="cur-dot"></div>
+    <div id="cur-ring"></div>
+
+    <!-- Navbar -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-inner">
+            <a href="#" class="nav-logo">
+                <img src="gym-logo.png" alt="Acrux Gymnasium Logo">
+            </a>
+            <div class="nav-links">
+                <a href="#" class="nav-link active">Home</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#arnold" class="nav-link">Legacy</a>
+                <a href="#programs" class="nav-link">Programs</a>
+                <a href="#schedule" class="nav-link">Schedule</a>
+                <a href="#pricing" class="nav-link">Pricing</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </div>
+            <a href="#contact" class="btn-join">Join Now</a>
+            <button class="hamburger" id="hamburger" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Nav Drawer -->
+    <div class="mobile-nav" id="mobileNav">
+        <a href="#" class="nav-link">Home</a>
+        <a href="#about" class="nav-link">About</a>
+        <a href="#arnold" class="nav-link">Legacy</a>
+        <a href="#programs" class="nav-link">Programs</a>
+        <a href="#schedule" class="nav-link">Schedule</a>
+        <a href="#pricing" class="nav-link">Pricing</a>
+        <a href="#contact" class="nav-link">Contact</a>
+    </div>
+
+    <!-- Section 1: Hero -->
+    <section class="hero" id="home">
+        <!-- New Hero Design with true transparency -->
+        <div class="hero-img-wrap">
+            <img src="hero-arnold-trans.png" class="hero-img" alt="Arnold Sculpture">
+        </div>
+        
+        <div class="hero-content">
+            <h1 class="headline hero-headline">
+                <span class="line-inner h-line1"><span class="word">SCULPT</span><span class="word h-your">YOUR</span><span class="word">BODY</span></span>
+                <span class="line-inner h-line2"><span class="word">ELEVATE</span><span class="word h-your">YOUR</span><span class="word">SPIRIT</span></span>
+            </h1>
+        </div>
+
+    </section>
+
+    <div class="stats-bar reveal from-bottom d3">
+        <div class="stat-item"><div class="stat-num counter" data-target="500" data-plus="true">0+</div><div class="stat-label">Members</div></div>
+        <div class="stat-item"><div class="stat-num counter" data-target="3">0</div><div class="stat-label">Expert Trainers</div></div>
+        <div class="stat-item"><div class="stat-num counter-static" style="opacity:0; transform:scale(0.8); transition:all 1.8s easeOutQuart;">₹1,000</div><div class="stat-label">Monthly Fee</div></div>
+        <div class="stat-item"><div class="stat-num">16H</div><div class="stat-label">Daily Access</div></div>
+    </div>
+
+    <!-- Section 2: About -->
+    <section class="section-bg2" id="about">
+        <div class="container about-grid">
+            <div class="about-left">
+                <div class="label-small reveal from-left">Our Story</div>
+                <div class="gold-rule reveal from-left"></div>
+                <h2 class="h2-title reveal from-left d2">Your Neighborhood Gym, Done Right.</h2>
+                <p class="body-text reveal from-left d3">Acrux Gym is a local gym in Vishnu Garden, Loni, Ghaziabad. We've been serving the neighborhood since 2019. We're not a franchise or a chain &mdash; we're your local gym, run by people who genuinely care about your progress. Whether you've never lifted before or you train 6 days a week, you'll find your place here.</p>
+                <div class="info-boxes reveal from-left d4">
+                    <div class="info-box">
+                        <h4>The Environment</h4>
+                        <p>Clean, well-lit, properly ventilated. Equipment that works. A space you actually want to come to every day.</p>
+                    </div>
+                    <div class="info-box">
+                        <h4>The Trainers</h4>
+                        <p>All trainers are certified with real experience. They track your form, adjust your plan, and actually know your name.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="about-right reveal scale-in">
+                <a href="#pricing" class="btn-primary" style="padding: 24px 48px; font-size: 14px;">Join for ₹1,000/mo</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Arnold Golden Era Section -->
+    <section class="section" id="arnold">
+        <div class="container">
+            <h2 class="h2-title text-center reveal">The Golden Era</h2>
+            <p class="body-text text-center reveal d1" style="max-width:none; margin: 0 auto;">Wisdom from the legends who paved the way.</p>
+            
+            <div class="arnold-grid">
+                <div class="arnold-card reveal from-left d2">
+                    <div class="arnold-img-wrap">
+                        <img src="arnold1.png" alt="Arnold Pose" class="arnold-img">
+                        <div class="arnold-overlay"></div>
+                    </div>
+                    <div class="arnold-quote">
+                        "Strength does not come from winning. Your struggles develop your strengths. When you go through hardships and decide not to surrender, that is strength."
+                    </div>
+                </div>
+                
+                <div class="arnold-card reveal from-right d3">
+                    <div class="arnold-img-wrap">
+                        <img src="arnold2.png" alt="Arnold Rest" class="arnold-img">
+                        <div class="arnold-overlay"></div>
+                    </div>
+                    <div class="arnold-quote">
+                        "The resistance that you fight physically in the gym and the resistance that you fight in life can only build a strong character."
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 3: Programs -->
+    <section class="section-bg2" id="programs">
+        <div class="container">
+            <h2 class="h2-title text-center reveal">What We Offer</h2>
+            <p class="body-text text-center reveal d1" style="max-width:none; margin: 0 auto;">Six programs. Every goal covered.</p>
+            <div class="programs-grid">
+                <a href="#" class="prog-card reveal scale-in d1">
+                    <div class="prog-icon">🏋</div>
+                    <h3 class="prog-title">Weight Training</h3>
+                    <p class="prog-desc">Build strength and muscle through progressive resistance training. Suitable for all levels, from first-timers to advanced lifters.</p>
+                    <div class="prog-sched">Schedule: Mon, Wed, Fri &mdash; 6 AM, 7 AM, 6 PM, 7 PM</div>
+                    <div class="prog-link">Ask us <span>&rarr;</span></div>
+                </a>
+                <a href="#" class="prog-card reveal scale-in d2">
+                    <div class="prog-icon">🚴</div>
+                    <h3 class="prog-title">Cardio & Endurance</h3>
+                    <p class="prog-desc">Treadmills, stationary bikes, and guided cardio sessions to help you improve stamina and burn fat effectively.</p>
+                    <div class="prog-sched">Schedule: Mon-Sat &mdash; 6 AM to 9 AM and 5 PM to 8 PM</div>
+                    <div class="prog-link">Ask us <span>&rarr;</span></div>
+                </a>
+                <a href="#" class="prog-card reveal scale-in d3">
+                    <div class="prog-icon">🤸</div>
+                    <h3 class="prog-title">Functional Fitness</h3>
+                    <p class="prog-desc">Bodyweight movements and resistance exercises designed to build real-world strength and improve how you move every day.</p>
+                    <div class="prog-sched">Schedule: Tue, Thu, Sat &mdash; 7 AM and 6 PM</div>
+                    <div class="prog-link">Ask us <span>&rarr;</span></div>
+                </a>
+                <a href="#" class="prog-card reveal scale-in d1">
+                    <div class="prog-icon">🧘</div>
+                    <h3 class="prog-title">Yoga & Stretching</h3>
+                    <p class="prog-desc">Morning yoga and evening stretching classes. Great for recovery, mobility, and mental clarity. Taught by a certified instructor.</p>
+                    <div class="prog-sched">Schedule: Mon-Sat &mdash; 6 AM and 7 PM</div>
+                    <div class="prog-link">Ask us <span>&rarr;</span></div>
+                </a>
+                <a href="#" class="prog-card reveal scale-in d2">
+                    <div class="prog-icon">👤</div>
+                    <h3 class="prog-title">Personal Training</h3>
+                    <p class="prog-desc">One-on-one sessions with a dedicated trainer. Fully customized workout and nutrition plan based on your specific goals.</p>
+                    <div class="prog-sched">Schedule: By appointment, Mon-Sat</div>
+                    <div class="prog-link">Ask us <span>&rarr;</span></div>
+                </a>
+                <a href="#" class="prog-card reveal scale-in d3">
+                    <div class="prog-icon">🌱</div>
+                    <h3 class="prog-title">Beginner Program</h3>
+                    <p class="prog-desc">Specially designed for complete beginners. Learn proper form, build a routine, and gain confidence in a supported environment.</p>
+                    <div class="prog-sched">Schedule: Mon, Wed, Fri &mdash; 8 AM and 5 PM</div>
+                    <div class="prog-link">Ask us <span>&rarr;</span></div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    
+    <!-- Section: Health Metrics -->
+    <section class="section" id="health-metrics">
+        <div class="container">
+            <h2 class="h2-title text-center reveal">Body Mass Index</h2>
+            <p class="body-text text-center reveal d1" style="max-width:none; margin: 0 auto 40px;">Calculate your BMI to determine your ideal health range before starting your protocol.</p>
+            
+            <div class="maker-card reveal d2" style="background: var(--card); border: 1.5px solid var(--border); border-radius: 20px; padding: 40px; max-width: 800px; margin: 0 auto; box-shadow: var(--shadow); display: flex; flex-wrap: wrap; gap: 40px; align-items: center;">
+                
+                <div style="flex: 1 1 300px;">
+                    <div style="margin-bottom: 24px;">
+                        <label style="display: block; font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text3); margin-bottom: 12px;">Weight (kg)</label>
+                        <input type="number" id="calc-weight" class="c-input" placeholder="e.g. 75" style="width: 100%; border: 1px solid var(--border); padding: 14px; border-radius: 8px; font-family: 'Cormorant Garamond', serif; font-size: 18px; color: var(--text); background: transparent;">
+                    </div>
+                    <div style="margin-bottom: 24px;">
+                        <label style="display: block; font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text3); margin-bottom: 12px;">Height (cm)</label>
+                        <input type="number" id="calc-height" class="c-input" placeholder="e.g. 175" style="width: 100%; border: 1px solid var(--border); padding: 14px; border-radius: 8px; font-family: 'Cormorant Garamond', serif; font-size: 18px; color: var(--text); background: transparent;">
+                    </div>
+                    <button id="calc-bmi-btn" class="btn-primary" style="width: 100%; padding: 16px;">Calculate BMI</button>
+                </div>
+
+                <div style="flex: 1 1 300px; display: flex; flex-direction: column; justify-content: center; align-items: center; background: var(--bg2); padding: 40px 20px; border-radius: 12px; text-align: center; border: 1px solid var(--border);">
+                    <div style="font-family: 'DM Sans', sans-serif; font-size: 12px; text-transform: uppercase; color: var(--text3); letter-spacing: 0.1em; margin-bottom: 10px;">Your BMI Score</div>
+                    <div id="bmi-res-num" style="font-family: 'Playfair Display', serif; font-size: 56px; color: var(--text); font-weight: 700; line-height: 1;">--</div>
+                    <div id="bmi-res-status" style="font-family: 'DM Sans', sans-serif; font-size: 16px; font-weight: 500; color: var(--accent); margin-top: 16px; text-transform: uppercase; letter-spacing: 0.1em;">Enter stats to calculate</div>
+                    <div id="bmi-res-ideal" style="font-family: 'Cormorant Garamond', serif; font-size: 18px; color: var(--text2); margin-top: 12px;"></div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Section: Workout Plan Maker -->
+    <section class="section-bg2" id="workout-maker" style="padding-top: 60px; padding-bottom: 60px;">
+        <div class="container">
+            <h2 class="h2-title text-center reveal">AI Workout Plan Generator</h2>
+            <p class="body-text text-center reveal d1" style="max-width:none; margin: 0 auto 40px;">Personalized routines based on science. Built for your goals.</p>
+            
+            <div class="maker-card reveal d2" style="background: var(--card); border: 1.5px solid var(--border); border-radius: 20px; padding: 40px; max-width: 800px; margin: 0 auto; box-shadow: var(--shadow);">
+                
+                <form id="advPlanForm">
+                    <div style="margin-bottom: 24px;">
+                        <label style="display: block; font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text3); margin-bottom: 12px;">Primary Goal</label>
+                        <div id="goal-chips" style="display: flex; flex-wrap: wrap; gap: 10px;">
+                            <div class="achip active" data-val="muscle">Build Muscle</div>
+                            <div class="achip" data-val="fatloss">Lose Fat</div>
+                            <div class="achip" data-val="strength">Raw Strength</div>
+                            <div class="achip" data-val="recomp">Body Recomposition</div>
+                        </div>
+                        <input type="hidden" id="wm-goal" value="muscle">
+                    </div>
+
+                    <div style="display:flex; flex-wrap: wrap; gap: 20px; margin-bottom: 24px;">
+                        <div style="flex: 1 1 45%;">
+                            <label style="display: block; font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text3); margin-bottom: 12px;">Experience Level</label>
+                            <select id="wm-exp" class="c-input" required style="width: 100%; border: 1px solid var(--border); padding: 14px; border-radius: 8px; font-family: 'Cormorant Garamond', serif; font-size: 18px; color: var(--text); background: transparent;">
+                                <option value="beginner">Beginner (0-1 yr)</option>
+                                <option value="intermediate">Intermediate (1-3 yrs)</option>
+                                <option value="advanced">Advanced (3+ yrs)</option>
+                            </select>
+                        </div>
+                        <div style="flex: 1 1 45%;">
+                            <label style="display: block; font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text3); margin-bottom: 12px;">Days per Week</label>
+                            <select id="wm-days" class="c-input" required style="width: 100%; border: 1px solid var(--border); padding: 14px; border-radius: 8px; font-family: 'Cormorant Garamond', serif; font-size: 18px; color: var(--text); background: transparent;">
+                                <option value="3">3 Days (Full Body)</option>
+                                <option value="4">4 Days (Upper/Lower)</option>
+                                <option value="5">5 Days (Bro Split / PPL+UL)</option>
+                                <option value="6">6 Days (Push/Pull/Legs)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div style="margin-bottom: 24px;">
+                        <label style="display: block; font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text3); margin-bottom: 12px;">Equipment Available</label>
+                        <select id="wm-equip" class="c-input" required style="width: 100%; border: 1px solid var(--border); padding: 14px; border-radius: 8px; font-family: 'Cormorant Garamond', serif; font-size: 18px; color: var(--text); background: transparent;">
+                            <option value="gym">Full Gym Access</option>
+                            <option value="home">Home (Dumbbells Only)</option>
+                            <option value="bodyweight">Bodyweight Only</option>
+                        </select>
+                    </div>
+
+                    <div style="margin-bottom: 24px; border: 1px solid var(--border); border-radius: 8px; overflow:hidden;">
+                        <div id="stats-toggle" style="padding: 16px; background: var(--bg2); cursor: pointer; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; display:flex; justify-content: space-between; align-items: center; color: var(--text);">
+                            <span>Calculate Calories & Macros (Optional)</span>
+                            <span id="stats-icon" style="font-size: 18px; line-height: 1;">+</span>
+                        </div>
+                        <div id="stats-body" style="display: none; padding: 20px; gap: 16px; flex-wrap: wrap; background: var(--card);">
+                            <div style="flex: 1 1 45%;"><label style="display: block; font-family: 'DM Sans', sans-serif; font-size: 11px; color: var(--text3); margin-bottom: 8px;">Age</label><input type="number" id="wm-age" class="c-input" placeholder="e.g. 25" style="width: 100%; border: 1px solid var(--border); padding: 12px; border-radius: 6px; font-family: 'Cormorant Garamond', serif; font-size: 16px; color: var(--text); background: transparent;"></div>
+                            <div style="flex: 1 1 45%;"><label style="display: block; font-family: 'DM Sans', sans-serif; font-size: 11px; color: var(--text3); margin-bottom: 8px;">Biological Sex</label>
+                                <select id="wm-sex" class="c-input" style="width: 100%; border: 1px solid var(--border); padding: 12px; border-radius: 6px; font-family: 'Cormorant Garamond', serif; font-size: 16px; color: var(--text); background: transparent;"><option value="m">Male</option><option value="f">Female</option></select>
+                            </div>
+                            <div style="flex: 1 1 45%;"><label style="display: block; font-family: 'DM Sans', sans-serif; font-size: 11px; color: var(--text3); margin-bottom: 8px;">Weight (kg)</label><input type="number" id="wm-weight" class="c-input" placeholder="e.g. 75" style="width: 100%; border: 1px solid var(--border); padding: 12px; border-radius: 6px; font-family: 'Cormorant Garamond', serif; font-size: 16px; color: var(--text); background: transparent;"></div>
+                            <div style="flex: 1 1 45%;"><label style="display: block; font-family: 'DM Sans', sans-serif; font-size: 11px; color: var(--text3); margin-bottom: 8px;">Height (cm)</label><input type="number" id="wm-height" class="c-input" placeholder="e.g. 175" style="width: 100%; border: 1px solid var(--border); padding: 12px; border-radius: 6px; font-family: 'Cormorant Garamond', serif; font-size: 16px; color: var(--text); background: transparent;"></div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-primary" style="width: 100%; padding: 16px;">Generate My AI Plan</button>
+                </form>
+
+                <div id="planLoader" style="display:none; text-align:center; padding: 60px 0;">
+                    <div style="width: 100%; height: 6px; background: var(--bg2); border-radius: 3px; overflow: hidden; margin-bottom: 20px;">
+                        <div id="loaderBar" style="height: 100%; width: 0%; background: var(--accent); transition: width 0.1s linear;"></div>
+                    </div>
+                    <div id="loaderText" style="font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--text2);">Analyzing bio-feedback inputs...</div>
+                </div>
+
+                <div id="advPlanResult" style="display:none; margin-top: 10px;">
+                    <div style="text-align: center; border-bottom: 1px solid var(--border); padding-bottom: 24px; margin-bottom: 24px;">
+                        <h3 id="res-title" style="font-family: 'Playfair Display', serif; font-size: 32px; color: var(--text); margin-bottom: 8px;"></h3>
+                        <p id="res-subtitle" style="font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.1em;"></p>
+                    </div>
+
+                    <div id="res-calories" style="display:none; background: var(--bg2); padding: 20px; border-radius: 12px; margin-bottom: 24px; text-align: center;">
+                        <div style="font-family: 'DM Sans', sans-serif; font-size: 12px; text-transform: uppercase; color: var(--text3); margin-bottom: 8px; letter-spacing: 0.1em;">Nutrition Protocol</div>
+                        <div id="res-cal-num" style="font-family: 'Playfair Display', serif; font-size: 28px; color: var(--accent); font-weight: 700; margin-bottom: 12px;"></div>
+                        <div style="display: flex; justify-content: center; gap: 20px; font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--text);">
+                            <div><strong>Pro:</strong> <span id="res-pro" style="color: var(--accent);"></span></div>
+                            <div><strong>Carbs:</strong> <span id="res-carb" style="color: var(--accent);"></span></div>
+                            <div><strong>Fats:</strong> <span id="res-fat" style="color: var(--accent);"></span></div>
+                        </div>
+                    </div>
+
+                    <div id="res-tabs" style="display: flex; gap: 8px; overflow-x: auto; padding-bottom: 10px; margin-bottom: 20px; scrollbar-width: none;"></div>
+                    <div id="res-content" style="min-height: 200px;"></div>
+
+                    <div style="margin-top: 40px; padding: 24px; border: 1px solid var(--border); border-radius: 12px; background: var(--bg2);">
+                        <h4 style="font-family: 'Playfair Display', serif; font-size: 20px; color: var(--text); margin-bottom: 12px;">Progression Model</h4>
+                        <p style="font-family: 'Cormorant Garamond', serif; font-size: 18px; color: var(--text2); line-height: 1.5;">Apply progressive overload. Increase weight by 2.5kg when you can hit the top of the rep range for all sets. Deload by reducing volume 50% every 6-8 weeks to manage fatigue.</p>
+                    </div>
+
+                    
+                    <div style="display:flex; gap: 10px; margin-top: 30px;">
+                        <button id="downloadPdfBtn" style="flex:1; background: var(--accent); border: none; color: var(--bg); padding: 16px 24px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500; text-transform: uppercase; border-radius: 8px; cursor: pointer; transition: all 0.3s ease;">Download PDF</button>
+                        <button id="resetAdvPlan" style="flex:1; background: none; border: 1px solid var(--border); color: var(--text); padding: 16px 24px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500; text-transform: uppercase; border-radius: 8px; cursor: pointer; transition: all 0.3s ease;">Start Over</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Section 4: Schedule -->
+    <section class="section" id="schedule">
+        <h2 class="h2-title text-center reveal">Weekly Class Schedule</h2>
+        <p class="body-text text-center reveal d1" style="max-width:none; margin: 0 auto;">Find your time. Show up consistently.</p>
+        <div class="sched-wrapper reveal d2">
+            <table class="sched">
+                <thead>
+                    <tr>
+                        <th>Time</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th><th>Sun</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="time-col">6:00 AM</td>
+                        <td><span class="chip chip-w" data-class="Weight Training">Weight</span></td>
+                        <td><span class="chip chip-c" data-class="Cardio & Endurance">Cardio</span></td>
+                        <td><span class="chip chip-w" data-class="Weight Training">Weight</span></td>
+                        <td><span class="chip chip-c" data-class="Cardio & Endurance">Cardio</span></td>
+                        <td><span class="chip chip-w" data-class="Weight Training">Weight</span></td>
+                        <td></td><td></td>
+                    </tr>
+                    <tr>
+                        <td class="time-col">7:00 AM</td>
+                        <td><span class="chip chip-c" data-class="Cardio & Endurance">Cardio</span></td>
+                        <td><span class="chip chip-f" data-class="Functional Fitness">Functional</span></td>
+                        <td><span class="chip chip-c" data-class="Cardio & Endurance">Cardio</span></td>
+                        <td><span class="chip chip-f" data-class="Functional Fitness">Functional</span></td>
+                        <td><span class="chip chip-c" data-class="Cardio & Endurance">Cardio</span></td>
+                        <td><span class="chip chip-w" data-class="Weight Training">Weight</span></td>
+                        <td><span class="chip chip-y" data-class="Yoga & Stretching">Yoga</span></td>
+                    </tr>
+                    <tr>
+                        <td class="time-col">8:00 AM</td>
+                        <td><span class="chip chip-b" data-class="Beginner Program">Beginner</span></td>
+                        <td><span class="chip chip-y" data-class="Yoga & Stretching">Yoga</span></td>
+                        <td><span class="chip chip-b" data-class="Beginner Program">Beginner</span></td>
+                        <td></td>
+                        <td><span class="chip chip-b" data-class="Beginner Program">Beginner</span></td>
+                        <td><span class="chip chip-c" data-class="Cardio & Endurance">Cardio</span></td>
+                        <td><span class="chip chip-c" data-class="Cardio & Endurance">Cardio</span></td>
+                    </tr>
+                    <tr>
+                        <td class="time-col">9:00 AM</td>
+                        <td></td><td></td><td></td>
+                        <td><span class="chip chip-y" data-class="Yoga & Stretching">Yoga</span></td>
+                        <td></td>
+                        <td><span class="chip chip-f" data-class="Functional Fitness">Functional</span></td>
+                        <td><span class="chip chip-w" data-class="Weight Training">Weight</span></td>
+                    </tr>
+                    <tr>
+                        <td class="time-col">12:00 PM</td>
+                        <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                    </tr>
+                    <tr>
+                        <td class="time-col">5:00 PM</td>
+                        <td><span class="chip chip-f" data-class="Functional Fitness">Functional</span></td>
+                        <td><span class="chip chip-c" data-class="Cardio & Endurance">Cardio</span></td>
+                        <td><span class="chip chip-w" data-class="Weight Training">Weight</span></td>
+                        <td><span class="chip chip-f" data-class="Functional Fitness">Functional</span></td>
+                        <td><span class="chip chip-w" data-class="Weight Training">Weight</span></td>
+                        <td><span class="chip chip-y" data-class="Yoga & Stretching">Yoga</span></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="time-col">6:00 PM</td>
+                        <td><span class="chip chip-w" data-class="Weight Training">Weight</span></td>
+                        <td><span class="chip chip-f" data-class="Functional Fitness">Functional</span></td>
+                        <td><span class="chip chip-y" data-class="Yoga & Stretching">Yoga</span></td>
+                        <td><span class="chip chip-w" data-class="Weight Training">Weight</span></td>
+                        <td><span class="chip chip-f" data-class="Functional Fitness">Functional</span></td>
+                        <td><span class="chip chip-w" data-class="Weight Training">Weight</span></td>
+                        <td><span class="chip chip-w" data-class="Weight Training">Weight</span></td>
+                    </tr>
+                    <tr>
+                        <td class="time-col">7:00 PM</td>
+                        <td><span class="chip chip-y" data-class="Yoga & Stretching">Yoga</span></td>
+                        <td><span class="chip chip-w" data-class="Weight Training">Weight</span></td>
+                        <td><span class="chip chip-c" data-class="Cardio & Endurance">Cardio</span></td>
+                        <td><span class="chip chip-c" data-class="Cardio & Endurance">Cardio</span></td>
+                        <td><span class="chip chip-y" data-class="Yoga & Stretching">Yoga</span></td>
+                        <td></td><td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Modal for Schedule -->
+    <div class="modal-overlay" id="schedModal">
+        <div class="modal-box">
+            <button class="modal-close" id="modalClose" aria-label="Close">✕</button>
+            <h3 class="modal-title" id="modalTitle">Class Name</h3>
+            <div class="modal-pill" id="modalPill">Mon · 6:00 AM</div>
+            <p class="modal-desc" id="modalDesc">Description goes here.</p>
+            <a href="#contact" class="btn-primary" style="width: 100%" id="modalBtn">Contact us to book</a>
+        </div>
+    </div>
+
+    <!-- Section 5: Trainers -->
+    <section class="section-bg2" id="trainers">
+        <div class="container">
+            <h2 class="h2-title text-center reveal">Our Trainers</h2>
+            <p class="body-text text-center reveal d1" style="max-width:none; margin: 0 auto;">Certified. Experienced. Here for you.</p>
+            <div class="trainers-grid">
+                <div class="t-card reveal from-left d1">
+                    <div class="t-inner">
+                        <div class="t-face t-front">
+                            <div class="t-avatar" style="animation-delay: 0s">RS</div>
+                            <h3 class="t-name">Rohit Sharma</h3>
+                            <div class="t-title">Head Strength Trainer</div>
+                            <div class="t-hint">hover to see bio</div>
+                        </div>
+                        <div class="t-face t-back">
+                            <h3 class="t-back-name">Rohit Sharma</h3>
+                            <p class="t-back-bio">Rohit has been lifting competitively since age 18 and has trained over 150 members at Acrux. He specializes in helping beginners build a solid foundation and takes intermediate lifters to the next level.</p>
+                            <div class="t-tags">
+                                <span class="t-tag">Strength Training</span><span class="t-tag">Powerlifting</span>
+                                <span class="t-tag">Beginner Coaching</span><span class="t-tag">Form</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="t-card reveal scale-in d2">
+                    <div class="t-inner">
+                        <div class="t-face t-front">
+                            <div class="t-avatar" style="animation-delay: 0.6s">NS</div>
+                            <h3 class="t-name">Neha Singh</h3>
+                            <div class="t-title">Yoga &amp; Wellness Coach</div>
+                            <div class="t-hint">hover to see bio</div>
+                        </div>
+                        <div class="t-face t-back">
+                            <h3 class="t-back-name">Neha Singh</h3>
+                            <p class="t-back-bio">Neha is a certified RYT-200 yoga instructor who also specializes in functional movement and recovery protocols. Her morning yoga sessions are some of the most popular classes at the gym.</p>
+                            <div class="t-tags">
+                                <span class="t-tag">Yoga</span><span class="t-tag">Stretching</span>
+                                <span class="t-tag">Mobility</span><span class="t-tag">Women's Fitness</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="t-card reveal from-right d3">
+                    <div class="t-inner">
+                        <div class="t-face t-front">
+                            <div class="t-avatar" style="animation-delay: 1.2s">AM</div>
+                            <h3 class="t-name">Arjun Mehta</h3>
+                            <div class="t-title">Cardio &amp; Fat Loss Coach</div>
+                            <div class="t-hint">hover to see bio</div>
+                        </div>
+                        <div class="t-face t-back">
+                            <h3 class="t-back-name">Arjun Mehta</h3>
+                            <p class="t-back-bio">Arjun holds a diploma in sports nutrition and has helped dozens of members achieve significant weight loss through structured cardio programming and diet guidance.</p>
+                            <div class="t-tags">
+                                <span class="t-tag">Cardio</span><span class="t-tag">Fat Loss</span>
+                                <span class="t-tag">Nutrition Basics</span><span class="t-tag">Endurance</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 6: Pricing -->
+    <section class="section" id="pricing">
+        <h2 class="h2-title text-center reveal">Membership Plans</h2>
+        <p class="body-text text-center reveal d1" style="max-width:none; margin: 0 auto;">No contracts. No hidden fees. Just show up.</p>
+
+        <div class="plans-grid">
+            <!-- 1 Month -->
+            <div class="plan-card reveal from-bottom d1">
+                <div class="p-accent-bar"></div>
+                <div class="plan-duration">1 Month</div>
+                <div class="plan-price"><sup>&#8377;</sup>1,000</div>
+                <div class="plan-saving">&nbsp;</div>
+                <div class="plan-divider"></div>
+                <div class="plan-features p-features">
+                    <div class="plan-feature"><div class="p-check">&#10003;</div><div class="p-text">Full gym access daily</div></div>
+                    <div class="plan-feature"><div class="p-check">&#10003;</div><div class="p-text">All group classes</div></div>
+                    <div class="plan-feature"><div class="p-check">&#10003;</div><div class="p-text">Trainer guidance</div></div>
+                    <div class="plan-feature"><div class="p-check">&#10003;</div><div class="p-text">Locker room access</div></div>
+                </div>
+                <a href="#contact" class="plan-cta">Get Started</a>
+            </div>
+
+            <!-- 3 Months -->
+            <div class="plan-card reveal from-bottom d2">
+                <div class="p-accent-bar"></div>
+                <div class="plan-duration">3 Months</div>
+                <div class="plan-price"><sup>&#8377;</sup>2,700</div>
+                <div class="plan-saving">Save &#8377;300 vs monthly</div>
+                <div class="plan-divider"></div>
+                <div class="plan-features p-features">
+                    <div class="plan-feature"><div class="p-check">&#10003;</div><div class="p-text">Full gym access daily</div></div>
+                    <div class="plan-feature"><div class="p-check">&#10003;</div><div class="p-text">All group classes</div></div>
+                    <div class="plan-feature"><div class="p-check">&#10003;</div><div class="p-text">Trainer guidance</div></div>
+                    <div class="plan-feature"><div class="p-check">&#10003;</div><div class="p-text">Locker room access</div></div>
+                </div>
+                <a href="#contact" class="plan-cta">Get Started</a>
+            </div>
+
+            <!-- 6 Months -->
+            <div class="plan-card reveal from-bottom d3">
+                <div class="p-accent-bar"></div>
+                <div class="plan-duration">6 Months</div>
+                <div class="plan-price"><sup>&#8377;</sup>5,000</div>
+                <div class="plan-saving">Save &#8377;1,000 vs monthly</div>
+                <div class="plan-divider"></div>
+                <div class="plan-features p-features">
+                    <div class="plan-feature"><div class="p-check">&#10003;</div><div class="p-text">Full gym access daily</div></div>
+                    <div class="plan-feature"><div class="p-check">&#10003;</div><div class="p-text">All group classes</div></div>
+                    <div class="plan-feature"><div class="p-check">&#10003;</div><div class="p-text">Trainer guidance</div></div>
+                    <div class="plan-feature"><div class="p-check">&#10003;</div><div class="p-text">Locker room access</div></div>
+                </div>
+                <a href="#contact" class="plan-cta">Get Started</a>
+            </div>
+
+            <!-- 1 Year (Featured) -->
+            <div class="plan-card featured reveal from-bottom d4">
+                <div class="p-accent-bar"></div>
+                <span class="plan-badge best">Best Value</span>
+                <div class="plan-duration">1 Year</div>
+                <div class="plan-price"><sup>&#8377;</sup>9,000</div>
+                <div class="plan-saving">Save &#8377;3,000 vs monthly</div>
+                <div class="plan-divider"></div>
+                <div class="plan-features p-features">
+                    <div class="plan-feature"><div class="p-check">&#10003;</div><div class="p-text">Full gym access daily</div></div>
+                    <div class="plan-feature"><div class="p-check">&#10003;</div><div class="p-text">All group classes</div></div>
+                    <div class="plan-feature"><div class="p-check">&#10003;</div><div class="p-text">Trainer guidance</div></div>
+                    <div class="plan-feature"><div class="p-check">&#10003;</div><div class="p-text">Locker room access</div></div>
+                    <div class="plan-feature"><div class="p-check">&#10003;</div><div class="p-text">Priority class booking</div></div>
+                </div>
+                <a href="#contact" class="plan-cta">Get Started</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 7: Testimonials -->
+    <section class="section-bg2" id="testimonials" style="padding-bottom:0;">
+        <h2 class="h2-title text-center reveal">What Members Say</h2>
+        <p class="body-text text-center reveal d1" style="max-width:none; margin: 0 auto;">Real feedback from real people.</p>
+        <div class="testi-wrap reveal d2">
+            <div class="testi-track" id="testiTrack">
+                <div class="testi-card">
+                    <div class="testi-q">&ldquo;</div>
+                    <p class="testi-text">I joined Acrux 6 months ago and I've already lost 14 kg. Arjun's cardio sessions are tough but effective. The atmosphere here keeps me motivated every single day.</p>
+                    <div class="testi-div"></div>
+                    <div class="testi-name">Vikas Gupta</div><div class="testi-since">Member since 2024</div><div class="testi-stars">★★★★★</div>
+                </div>
+                <div class="testi-card">
+                    <div class="testi-q">&ldquo;</div>
+                    <p class="testi-text">Rohit corrected my squat form in the very first session. After months of lower back pain at other gyms, I finally feel safe lifting. This place is genuinely different.</p>
+                    <div class="testi-div"></div>
+                    <div class="testi-name">Priya Agarwal</div><div class="testi-since">Member since 2023</div><div class="testi-stars">★★★★★</div>
+                </div>
+                <div class="testi-card">
+                    <div class="testi-q">&ldquo;</div>
+                    <p class="testi-text">Neha's morning yoga classes are the reason I actually wake up early now. The best part of my day. The trainers here know your name and your goals &mdash; not just your face.</p>
+                    <div class="testi-div"></div>
+                    <div class="testi-name">Sunita Yadav</div><div class="testi-since">Member since 2024</div><div class="testi-stars">★★★★★</div>
+                </div>
+                <div class="testi-card">
+                    <div class="testi-q">&ldquo;</div>
+                    <p class="testi-text">₹1,000 a month with actual trained coaches and working equipment? In Ghaziabad? I've checked five gyms in the area &mdash; this is the only one worth the money.</p>
+                    <div class="testi-div"></div>
+                    <div class="testi-name">Mohit Bansal</div><div class="testi-since">Member since 2022</div><div class="testi-stars">★★★★★</div>
+                </div>
+                <div class="testi-card">
+                    <div class="testi-q">&ldquo;</div>
+                    <p class="testi-text">Started as a total beginner &mdash; never touched a dumbbell in my life. Within 3 months I had a proper routine, lost 8 kg, and built real confidence. Rohit is brilliant.</p>
+                    <div class="testi-div"></div>
+                    <div class="testi-name">Ritika Jain</div><div class="testi-since">Member since 2023</div><div class="testi-stars">★★★★★</div>
+                </div>
+                <div class="testi-card">
+                    <div class="testi-q">&ldquo;</div>
+                    <p class="testi-text">I've trained in gyms all over Delhi-NCR. What makes Acrux different is that the trainers actually pay attention. The community is encouraging and the gym is clean.</p>
+                    <div class="testi-div"></div>
+                    <div class="testi-name">Sanjay Rawat</div><div class="testi-since">Member since 2021</div><div class="testi-stars">★★★★★</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 8: Contact -->
+    <section class="section" id="contact" style="margin-top:60px;">
+        <h2 class="h2-title reveal">Come Visit Us</h2>
+        <p class="body-text reveal d1" style="max-width:none; margin: 0;">Walk-ins are welcome. Come check the gym for free.</p>
+        <div class="contact-grid">
+            <div class="contact-left reveal from-left d2">
+                <div class="c-info-item">
+                    <div class="c-label">Find Us</div>
+                    <div class="c-val">Vishnu Garden, Loni, Ghaziabad, UP 201102 <br><span style="font-size: 13px; color: var(--accent); margin-top:4px; display:block;">Landmark: Near Tiranga Chawk</span></div>
+                </div>
+                <div class="c-info-item">
+                    <div class="c-label">Phone</div>
+                    <div class="c-val">+91 83768 68838</div>
+                </div>
+                <div class="c-info-item">
+                    <div class="c-label">Email</div>
+                    <div class="c-val">acruxgymnasium@gmail.com</div>
+                </div>
+                <div class="c-label" style="margin-top: 40px;">Working Hours</div>
+                <table class="hours-table">
+                    <tr><td>Monday&ndash;Saturday</td><td>6:00 AM &ndash; 10:00 PM</td></tr>
+                    <tr><td>Sunday</td><td style="color:#c0392b;">CLOSED</td></tr>
+                    <tr><td style="border:none;">Public Holidays</td><td style="border:none;">8:00 AM &ndash; 6:00 PM</td></tr>
+                </table>
+                <div class="walk-in">
+                    Walk-ins welcome anytime during working hours. Ask for a free trial session &mdash; no commitment needed.
+                </div>
+            </div>
+            <div class="contact-right reveal from-right d3">
+                <form class="c-form" id="contactForm" action="https://api.web3forms.com/submit" method="POST">
+                    <input type="hidden" name="access_key" value="YOUR_WEB3FORMS_ACCESS_KEY_HERE">
+                    <div class="c-field">
+                        <input type="text" name="name" class="c-input" placeholder="Full Name" required aria-label="Full Name">
+                        <div class="c-err-msg">Name is required</div>
+                    </div>
+                    <div class="c-field">
+                        <input type="tel" name="phone" class="c-input" placeholder="Phone Number" required pattern="\d{10}" aria-label="Phone Number">
+                        <div class="c-err-msg">Please enter a valid 10-digit phone number</div>
+                    </div>
+                    <div class="c-field">
+                        <input type="email" name="email" class="c-input" placeholder="Email Address (optional)" aria-label="Email Address">
+                        <div class="c-err-msg">Please enter a valid email</div>
+                    </div>
+                    <div class="c-field">
+                        <select name="goal" class="c-input" required aria-label="Goal">
+                            <option value="">Choose your goal...</option>
+                            <option value="weight">Lose Weight</option>
+                            <option value="muscle">Build Muscle</option>
+                            <option value="fitness">General Fitness</option>
+                            <option value="yoga">Yoga &amp; Flexibility</option>
+                            <option value="pt">Personal Training</option>
+                            <option value="explore">Just Exploring</option>
+                        </select>
+                        <div class="c-err-msg">Please select an option</div>
+                    </div>
+                    <div class="c-field">
+                        <textarea name="message" class="c-input" rows="4" placeholder="Any questions? We'll reply promptly." aria-label="Message"></textarea>
+                    </div>
+                    <button type="submit" class="btn-primary btn-submit">Send Inquiry</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="f-top"></div>
+        <div class="f-container">
+            <div class="f-grid">
+                <div>
+                    <div class="f-logo">ACRUX GYM</div>
+                    <div class="f-tagline">Your neighborhood gym.</div>
+                    <div class="f-desc">Honest training. Trained coaches. One simple price. Located in Sector 4, Ghaziabad.</div>
+                </div>
+                <div>
+                    <div class="f-heading">QUICK LINKS</div>
+                    <a href="#home" class="f-link">Home</a>
+                    <a href="#about" class="f-link">About</a>
+                    <a href="#programs" class="f-link">Programs</a>
+                    <a href="#schedule" class="f-link">Schedule</a>
+                    <a href="#trainers" class="f-link">Trainers</a>
+                    <a href="#pricing" class="f-link">Pricing</a>
+                    <a href="#contact" class="f-link">Contact</a>
+                </div>
+                <div>
+                    <div class="f-heading">VISIT US</div>
+                    <div class="f-info">
+                        Vishnu Garden, Loni<br>
+                        Ghaziabad, UP 201102<br>
+                        Landmark: Near Tiranga Chawk<br>
+                        +91 83768 68838<br>
+                        acruxgymnasium@gmail.com<br><br>
+                        Mon&ndash;Sat: 6 AM &ndash; 10 PM<br>
+                        Sun: CLOSED
+                    </div>
+                </div>
+            </div>
+            <div class="f-bottom">
+                &copy; 2025 Acrux Gym, Ghaziabad. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to top -->
+    <button class="back-top" id="backTop" aria-label="Back to top">&uarr;</button>
+
+    <script>
+        // High Performance optimizations: Use requestAnimationFrame for all continuous updates
+        
+
+
+        // Loader
+        setTimeout(() => {
+            const loader = document.getElementById('loader');
+            loader.style.transform = 'translateY(-100%)';
+            loader.style.opacity = '0';
+            setTimeout(() => loader.remove(), 600);
+        }, 2000);
+
+        // Custom Cursor
+        const dot = document.getElementById('cur-dot');
+        const ring = document.getElementById('cur-ring');
+        let mx = 0, my = 0, rx = 0, ry = 0;
+        let isHovering = false;
+        let currentScale = 1, targetScale = 1;
+
+        if (window.innerWidth > 1024 && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            document.addEventListener('mousemove', e => {
+                mx = e.clientX;
+                my = e.clientY;
+                dot.style.transform = `translate(${mx}px, ${my}px)`;
+            });
+            document.addEventListener('mouseover', e => {
+                if(e.target.closest('button') || e.target.closest('a') || e.target.closest('.prog-card') || e.target.closest('.chip') || e.target.closest('.t-card') || e.target.closest('.arnold-card')) {
+                    document.body.classList.add('cursor-active');
+                    targetScale = 1.5;
+                }
+            });
+            document.addEventListener('mouseout', e => {
+                if(e.target.closest('button') || e.target.closest('a') || e.target.closest('.prog-card') || e.target.closest('.chip') || e.target.closest('.t-card') || e.target.closest('.arnold-card')) {
+                    document.body.classList.remove('cursor-active');
+                    targetScale = 1;
+                }
+            });
+            function loopCursor() {
+                rx += (mx - rx) * 0.12;
+                ry += (my - ry) * 0.12;
+                currentScale += (targetScale - currentScale) * 0.12;
+                ring.style.transform = `translate(${rx}px, ${ry}px) scale(${currentScale})`;
+                requestAnimationFrame(loopCursor);
+            }
+            requestAnimationFrame(loopCursor);
+        }
+
+        // Scroll Progress & Navbar optimized
+        const progBar = document.getElementById('scroll-prog');
+        const navbar = document.getElementById('navbar');
+        let docHeight = document.body.scrollHeight - window.innerHeight;
+        window.addEventListener('resize', () => {
+            docHeight = document.body.scrollHeight - window.innerHeight;
+        });
+        
+        let lastScrollY = window.scrollY;
+        let ticking = false;
+
+        function updateScroll() {
+            if(docHeight > 0) progBar.style.width = (lastScrollY / docHeight * 100) + '%';
+            if(lastScrollY > 80) navbar.classList.add('scrolled');
+            else navbar.classList.remove('scrolled');
+            ticking = false;
+        }
+
+        window.addEventListener('scroll', () => {
+            lastScrollY = window.scrollY;
+            if (!ticking) {
+                requestAnimationFrame(updateScroll);
+                ticking = true;
+            }
+        });
+
+        // Intersection Observer for Reveal
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // Intersection Observer for Counters
+        const countObserver = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    const el = entry.target;
+                    const target = parseFloat(el.getAttribute('data-target'));
+                    if(!isNaN(target)) {
+                        const duration = 1800;
+                        const start = performance.now();
+                        function step(now) {
+                            const p = Math.min((now - start) / duration, 1);
+                            const ease = 1 - Math.pow(1 - p, 4);
+                            const val = Math.floor(ease * target);
+                            el.innerText = el.getAttribute('data-plus') ? `${val}+` : val;
+                            if(p < 1) requestAnimationFrame(step);
+                            else el.innerText = el.getAttribute('data-plus') ? `${target}+` : target;
+                        }
+                        requestAnimationFrame(step);
+                    } else {
+                        el.style.opacity = 1;
+                        el.style.transform = 'scale(1)';
+                    }
+                    countObserver.unobserve(el);
+                }
+            });
+        });
+        document.querySelectorAll('.counter, .counter-static').forEach(el => countObserver.observe(el));
+
+        // Intersection Observer for Checkmarks
+        const checkObserver = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    const checks = entry.target.querySelectorAll('.p-check');
+                    checks.forEach((chk, i) => {
+                        setTimeout(() => chk.classList.add('visible'), i * 80);
+                    });
+                    checkObserver.unobserve(entry.target);
+                }
+            });
+        });
+        document.querySelectorAll('.p-features').forEach(el => checkObserver.observe(el));
+
+        // Schedule Logic
+        const dayMap = [7, 1, 2, 3, 4, 5, 6];
+        const today = new Date().getDay();
+        const colIndex = dayMap[today];
+        document.querySelectorAll('.sched tr').forEach((row, rIdx) => {
+            if(rIdx === 0) {
+                const ths = row.querySelectorAll('th');
+                if(ths.length > colIndex) ths[colIndex].classList.add('today');
+            } else {
+                const tds = row.querySelectorAll('td');
+                if(tds.length > colIndex) tds[colIndex].classList.add('today');
+            }
+        });
+
+        const programDetails = {
+            "Weight Training": "Build strength and muscle through progressive resistance training. Suitable for all levels, from first-timers to advanced lifters.",
+            "Cardio & Endurance": "Treadmills, stationary bikes, and guided cardio sessions to help you improve stamina and burn fat effectively.",
+            "Functional Fitness": "Bodyweight movements and resistance exercises designed to build real-world strength and improve how you move every day.",
+            "Yoga & Stretching": "Morning yoga and evening stretching classes. Great for recovery, mobility, and mental clarity.",
+            "Beginner Program": "Specially designed for complete beginners. Learn proper form, build a routine, and gain confidence in a supported environment."
+        };
+
+        const modalOverlay = document.getElementById('schedModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalPill = document.getElementById('modalPill');
+        const modalDesc = document.getElementById('modalDesc');
+        const modalClose = document.getElementById('modalClose');
+
+        document.querySelectorAll('.chip').forEach(chip => {
+            chip.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const cls = chip.getAttribute('data-class');
+                const time = chip.closest('tr').querySelector('.time-col').innerText;
+                const cellIndex = Array.from(chip.closest('tr').children).indexOf(chip.closest('td'));
+                const day = document.querySelectorAll('.sched th')[cellIndex].innerText;
+                
+                modalTitle.innerText = cls;
+                modalPill.innerText = `${day} · ${time}`;
+                modalDesc.innerText = programDetails[cls] || "Join our class and reach your goals.";
+                
+                modalOverlay.classList.add('active');
+            });
+        });
+
+        modalClose.addEventListener('click', () => modalOverlay.classList.remove('active'));
+        modalOverlay.addEventListener('click', (e) => {
+            if(e.target === modalOverlay) modalOverlay.classList.remove('active');
+        });
+        document.addEventListener('keydown', (e) => {
+            if(e.key === 'Escape') modalOverlay.classList.remove('active');
+        });
+
+        // Trainers Mobile Flip
+        document.querySelectorAll('.t-card').forEach(card => {
+            card.addEventListener('click', () => {
+                if(window.innerWidth <= 1024) card.classList.toggle('flipped');
+            });
+        });
+
+        // Testimonials Loop
+        const track = document.getElementById('testiTrack');
+        const cards = Array.from(track.children);
+        cards.forEach(card => track.appendChild(card.cloneNode(true)));
+
+        // Contact Form Validation
+        const form = document.getElementById('contactForm');
+        const inputs = form.querySelectorAll('input, select, textarea');
+
+        function validateField(input) {
+            const parent = input.parentElement;
+            let valid = true;
+            if(input.required && !input.value.trim()) valid = false;
+            if(input.type === 'tel' && !/^\d{10}$/.test(input.value.trim())) valid = false;
+            if(input.type === 'email' && input.value.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.value.trim())) valid = false;
+            
+            if(!valid) {
+                input.classList.add('error');
+                input.classList.remove('valid');
+                parent.classList.add('has-error');
+            } else {
+                input.classList.remove('error');
+                if(input.value.trim() || input.tagName === 'SELECT') input.classList.add('valid');
+                parent.classList.remove('has-error');
+            }
+            return valid;
+        }
+
+        inputs.forEach(input => input.addEventListener('blur', () => validateField(input)));
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            let formValid = true;
+            inputs.forEach(i => { if(!validateField(i)) formValid = false; });
+            
+            if(formValid) {
+                const btn = form.querySelector('.btn-submit');
+                const originalText = btn.innerHTML;
+                btn.innerHTML = 'Sending...';
+                btn.style.pointerEvents = 'none';
+                
+                try {
+                    const formData = new FormData(form);
+                    const response = await fetch('https://api.web3forms.com/submit', {
+                        method: 'POST',
+                        body: formData
+                    });
+                    
+                    if(response.ok) {
+                        btn.innerHTML = '✓ Message Received!';
+                        btn.classList.add('success');
+                        
+                        const rect = btn.getBoundingClientRect();
+                        for(let i=0; i<24; i++) {
+                            const conf = document.createElement('div');
+                            conf.style.position = 'fixed';
+                            conf.style.width = '8px';
+                            conf.style.height = '8px';
+                            conf.style.borderRadius = '2px';
+                            const colors = ['var(--accent)', '#c0392b', '#4caf72', '#3498db'];
+                            conf.style.background = colors[Math.floor(Math.random() * colors.length)];
+                            conf.style.left = (rect.left + Math.random() * rect.width) + 'px';
+                            conf.style.top = rect.top + 'px';
+                            conf.style.zIndex = 9999;
+                            document.body.appendChild(conf);
+                            
+                            const angle = Math.random() * Math.PI * 2;
+                            const velocity = 2 + Math.random() * 3;
+                            let x = 0, y = 0, vy = -velocity * 2;
+                            
+                            function animateConfetti() {
+                                x += Math.cos(angle) * velocity;
+                                y += vy;
+                                vy += 0.2;
+                                conf.style.transform = `translate(${x}px, ${y}px) rotate(${x*2}deg)`;
+                                if(y < window.innerHeight) requestAnimationFrame(animateConfetti);
+                                else conf.remove();
+                            }
+                            requestAnimationFrame(animateConfetti);
+                        }
+                        
+                        setTimeout(() => {
+                            btn.innerHTML = 'Send Inquiry';
+                            btn.classList.remove('success');
+                            btn.style.pointerEvents = 'auto';
+                            form.reset();
+                            inputs.forEach(i => i.classList.remove('valid', 'error'));
+                        }, 4000);
+                    } else {
+                        btn.innerHTML = 'Error Sending';
+                        btn.style.pointerEvents = 'auto';
+                        setTimeout(() => { btn.innerHTML = originalText; }, 3000);
+                    }
+                } catch(error) {
+                    btn.innerHTML = 'Error Sending';
+                    btn.style.pointerEvents = 'auto';
+                    setTimeout(() => { btn.innerHTML = originalText; }, 3000);
+                }
+            }
+        });
+
+        
+        // BMI Calculator Logic
+        const calcBmiBtn = document.getElementById('calc-bmi-btn');
+        if(calcBmiBtn) {
+            calcBmiBtn.addEventListener('click', () => {
+                const w = parseFloat(document.getElementById('calc-weight').value);
+                const h = parseFloat(document.getElementById('calc-height').value) / 100;
+                if(w && h) {
+                    const bmi = (w / (h * h)).toFixed(1);
+                    document.getElementById('bmi-res-num').innerText = bmi;
+                    let status = "Normal", color = "#4caf72";
+                    if(bmi < 18.5) { status = "Underweight"; color = "#f39c12"; }
+                    else if(bmi >= 25 && bmi < 30) { status = "Overweight"; color = "#e67e22"; }
+                    else if(bmi >= 30) { status = "Obese"; color = "#c0392b"; }
+                    
+                    const statusEl = document.getElementById('bmi-res-status');
+                    statusEl.innerText = status;
+                    statusEl.style.color = color;
+                    
+                    const idealLow = (18.5 * h * h).toFixed(1);
+                    const idealHigh = (24.9 * h * h).toFixed(1);
+                    document.getElementById('bmi-res-ideal').innerText = `Ideal Weight: ${idealLow}kg - ${idealHigh}kg`;
+                }
+            });
+        }
+
+        // Advanced Workout Plan Maker Logic
+        const advForm = document.getElementById('advPlanForm');
+        const planLoader = document.getElementById('planLoader');
+        const advResult = document.getElementById('advPlanResult');
+        const loaderBar = document.getElementById('loaderBar');
+        const loaderText = document.getElementById('loaderText');
+        const goalChips = document.querySelectorAll('.achip');
+        const goalInput = document.getElementById('wm-goal');
+        const statsToggle = document.getElementById('stats-toggle');
+        const statsBody = document.getElementById('stats-body');
+        const statsIcon = document.getElementById('stats-icon');
+
+        // Chips
+        goalChips.forEach(chip => {
+            chip.addEventListener('click', () => {
+                goalChips.forEach(c => c.classList.remove('active'));
+                chip.classList.add('active');
+                goalInput.value = chip.dataset.val;
+            });
+        });
+
+        // Collapsible
+        statsToggle.addEventListener('click', () => {
+            if(statsBody.style.display === 'none') {
+                statsBody.style.display = 'flex';
+                statsIcon.innerText = '-';
+            } else {
+                statsBody.style.display = 'none';
+                statsIcon.innerText = '+';
+            }
+        });
+
+        // DB & Generation
+        advForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const inputs = {
+                goal: goalInput.value,
+                exp: document.getElementById('wm-exp').value,
+                days: parseInt(document.getElementById('wm-days').value),
+                equip: document.getElementById('wm-equip').value,
+                age: document.getElementById('wm-age').value,
+                sex: document.getElementById('wm-sex').value,
+                weight: document.getElementById('wm-weight').value,
+                height: document.getElementById('wm-height').value
+            };
+
+            advForm.style.display = 'none';
+            planLoader.style.display = 'block';
+            
+            // Animation
+            let progress = 0;
+            const texts = ["Analyzing biomechanics...", "Calculating volume...", "Structuring splits...", "Finalizing routine..."];
+            const intv = setInterval(() => {
+                progress += 5;
+                loaderBar.style.width = progress + '%';
+                if(progress % 25 === 0 && progress < 100) loaderText.innerText = texts[progress/25];
+                if(progress >= 100) {
+                    clearInterval(intv);
+                    setTimeout(() => showPlan(inputs), 200);
+                }
+            }, 100);
+        });
+
+        function showPlan(inp) {
+            planLoader.style.display = 'none';
+            advResult.style.display = 'block';
+
+            // 1. Header
+            const goals = { muscle: "Hypertrophy", fatloss: "Fat Loss", strength: "Strength", recomp: "Recomposition" };
+            const exps = { beginner: "Beginner", intermediate: "Intermediate", advanced: "Advanced" };
+            document.getElementById('res-title').innerText = `${goals[inp.goal]} Protocol - ${inp.days} Days`;
+            document.getElementById('res-subtitle').innerText = `${exps[inp.exp]} Level - ${inp.equip === 'gym' ? 'Full Gym' : inp.equip === 'home' ? 'Home/Dumbbells' : 'Bodyweight'}`;
+
+            // 2. Calories
+            const calDiv = document.getElementById('res-calories');
+            if(inp.weight && inp.height && inp.age) {
+                let w = parseFloat(inp.weight), h = parseFloat(inp.height), a = parseInt(inp.age);
+                // Mifflin-St Jeor
+                let tdee = (10*w) + (6.25*h) - (5*a) + (inp.sex==='m' ? 5 : -161);
+                tdee *= 1.375; // light activity multiplier
+                
+                let targetCal = tdee;
+                let pro = w * 2.2; // 2.2g per kg
+                if(inp.goal === 'fatloss') targetCal -= 400;
+                if(inp.goal === 'muscle') targetCal += 300;
+                
+                let fat = (targetCal * 0.25) / 9;
+                let carb = (targetCal - (pro*4) - (fat*9)) / 4;
+
+                document.getElementById('res-cal-num').innerText = `${Math.round(targetCal)} kcal / day`;
+                document.getElementById('res-pro').innerText = `${Math.round(pro)}g`;
+                document.getElementById('res-fat').innerText = `${Math.round(fat)}g`;
+                document.getElementById('res-carb').innerText = `${Math.round(carb)}g`;
+                calDiv.style.display = 'block';
+            } else {
+                calDiv.style.display = 'none';
+            }
+
+            // 3. Logic & DB Generation
+            const splitConfig = {
+                3: [
+                    {name: "Full Body A", type: "Full Body"},
+                    {name: "Rest", type: "rest"},
+                    {name: "Full Body B", type: "Full Body"},
+                    {name: "Rest", type: "rest"},
+                    {name: "Full Body C", type: "Full Body"},
+                    {name: "Rest", type: "rest"},
+                    {name: "Rest", type: "rest"}
+                ],
+                4: [
+                    {name: "Upper A", type: "Upper"},
+                    {name: "Lower A", type: "Lower"},
+                    {name: "Rest", type: "rest"},
+                    {name: "Upper B", type: "Upper"},
+                    {name: "Lower B", type: "Lower"},
+                    {name: "Rest", type: "rest"},
+                    {name: "Rest", type: "rest"}
+                ],
+                5: [
+                    {name: "Push", type: "Push"},
+                    {name: "Pull", type: "Pull"},
+                    {name: "Legs", type: "Legs"},
+                    {name: "Rest", type: "rest"},
+                    {name: "Upper", type: "Upper"},
+                    {name: "Lower", type: "Lower"},
+                    {name: "Rest", type: "rest"}
+                ],
+                6: [
+                    {name: "Push A", type: "Push"},
+                    {name: "Pull A", type: "Pull"},
+                    {name: "Legs A", type: "Legs"},
+                    {name: "Push B", type: "Push"},
+                    {name: "Pull B", type: "Pull"},
+                    {name: "Legs B", type: "Legs"},
+                    {name: "Rest", type: "rest"}
+                ]
+            };
+
+            
+            const schedule = splitConfig[inp.days];
+            const contentDiv = document.getElementById('res-content');
+            const tabsDiv = document.getElementById('res-tabs');
+            if(tabsDiv) tabsDiv.style.display = 'none'; // hide old tabs completely
+            contentDiv.innerHTML = '';
+            
+            // Helper to get exercises
+            function getExercises(type, equip, exp, goal) {
+                let reps = goal === 'strength' ? '4-6' : goal === 'fatloss' ? '12-15' : '8-12';
+                let sets = exp === 'beginner' ? '3' : '4';
+                let rest = goal === 'strength' ? '3 min' : goal === 'fatloss' ? '60 sec' : '90 sec';
+                let rpe = exp === 'beginner' ? '7' : '8.5';
+                
+                const db = {
+                    "Push": [
+                        {n: "Incline Press", t: "Compound", f: "Keep shoulders retracted. Press in a slight arc.", m: "Flaring elbows too wide."},
+                        {n: "Overhead Press", t: "Compound", f: "Brace core tightly. Push head through at the top.", m: "Arching lower back excessively."},
+                        {n: "Lateral Raises", t: "Isolation", f: "Slight lean forward. Lead with elbows.", m: "Using momentum to swing weight."},
+                        {n: "Tricep Extensions", t: "Isolation", f: "Lock elbows in place. Squeeze at lockout.", m: "Moving the upper arm."}
+                    ],
+                    "Pull": [
+                        {n: "Lat Pulldowns / Pull-ups", t: "Compound", f: "Drive elbows down to pockets.", m: "Using biceps instead of lats."},
+                        {n: "Barbell/DB Row", t: "Compound", f: "Keep back flat. Pull to hip crease.", m: "Jerking the weight up."},
+                        {n: "Face Pulls", t: "Isolation", f: "Pull towards forehead. Squeeze rear delts.", m: "Going too heavy."},
+                        {n: "Bicep Curls", t: "Isolation", f: "Supinate wrists. Control the eccentric.", m: "Swinging the torso."}
+                    ],
+                    "Legs": [
+                        {n: "Squats", t: "Compound", f: "Break at hips and knees together. Drive through mid-foot.", m: "Knees caving inwards (valgus)."},
+                        {n: "Romanian Deadlift", t: "Compound", f: "Hinge at hips. Keep bar close to legs.", m: "Rounding the lower back."},
+                        {n: "Leg Press / Lunges", t: "Compound", f: "Control the descent. Deep range of motion.", m: "Locking out knees too hard."},
+                        {n: "Calf Raises", t: "Isolation", f: "Pause at bottom stretch and top squeeze.", m: "Bouncing the reps."}
+                    ]
+                };
+                
+                db["Upper"] = [...db["Push"].slice(0,2), ...db["Pull"].slice(0,2), db["Push"][2], db["Pull"][3]];
+                db["Lower"] = db["Legs"];
+                db["Full Body"] = [db["Legs"][0], db["Push"][0], db["Pull"][0], db["Legs"][1], db["Push"][2]];
+
+                // Adjust for equipment
+                let rawList = db[type] || [];
+                if(equip === 'bodyweight') {
+                    rawList = rawList.map(ex => {
+                        if(ex.n.includes("Press")) ex.n = "Push-up Variations";
+                        if(ex.n.includes("Row") || ex.n.includes("Pull")) ex.n = "Pull-ups / Inverted Rows";
+                        if(ex.n.includes("Squat")) ex.n = "Pistol / Jump Squats";
+                        if(ex.n.includes("Deadlift")) ex.n = "Single Leg Glute Bridges";
+                        if(ex.t === "Isolation") ex.n = "Core Plank / Hollow Hold";
+                        return ex;
+                    });
+                } else if(equip === 'home') {
+                    rawList = rawList.map(ex => {
+                        ex.n = ex.n.replace("Barbell", "Dumbbell").replace("Pulldowns", "Pullovers");
+                        return ex;
+                    });
+                }
+
+                let html = '';
+                rawList.forEach(ex => {
+                    html += `
+                        <div class="ex-card" onclick="this.querySelector('.ex-body').style.display = this.querySelector('.ex-body').style.display==='block' ? 'none' : 'block'">
+                            <div class="ex-header">
+                                <div class="ex-title">${ex.n}</div>
+                                <div class="ex-badge">${ex.t}</div>
+                            </div>
+                            <div class="ex-details">
+                                <span>🎯 ${sets} x ${reps}</span>
+                                <span>⏱ ${rest}</span>
+                                <span>🔥 RPE ${rpe}</span>
+                            </div>
+                            <div class="ex-body">
+                                <p><strong>Form Tip:</strong> ${ex.f}</p>
+                                <p><strong>Common Mistake:</strong> ${ex.m}</p>
+                            </div>
+                        </div>
+                    `;
+                });
+                return html;
+            }
+
+            schedule.forEach((day, i) => {
+                let dContent = document.createElement('div');
+                dContent.style.marginBottom = '24px';
+                
+                let dayHeader = document.createElement('h4');
+                dayHeader.style.fontFamily = "'DM Sans', sans-serif";
+                dayHeader.style.fontSize = "16px";
+                dayHeader.style.color = "var(--accent)";
+                dayHeader.style.marginBottom = "12px";
+                dayHeader.style.textTransform = "uppercase";
+                dayHeader.style.letterSpacing = "0.05em";
+                dayHeader.innerText = `Day ${i+1} — ${day.name}`;
+                dContent.appendChild(dayHeader);
+
+                if(day.type === 'rest') {
+                    dContent.innerHTML += `<div style="padding: 20px; border: 1px dashed var(--border2); border-radius: 8px; color: var(--text3); font-family: 'DM Sans', sans-serif;">Active recovery or total rest. Drink water, stretch, and let muscles rebuild.</div>`;
+                } else {
+                    dContent.innerHTML += getExercises(day.type, inp.equip, inp.exp, inp.goal);
+                }
+                
+                contentDiv.appendChild(dContent);
+            });
+        }
+
+        document.getElementById('resetAdvPlan').addEventListener('click', () => {
+            advResult.style.display = 'none';
+            advForm.style.display = 'block';
+        });
+
+        // PDF Download logic
+        const downloadBtn = document.getElementById('downloadPdfBtn');
+        if(downloadBtn) {
+            downloadBtn.addEventListener('click', () => {
+                const element = document.getElementById('advPlanResult');
+                
+                // Hide buttons before printing
+                downloadBtn.parentElement.style.display = 'none';
+                
+                const opt = {
+                  margin:       0.5,
+                  filename:     'Acrux_Gym_Workout_Plan.pdf',
+                  image:        { type: 'jpeg', quality: 0.98 },
+                  html2canvas:  { scale: 2, windowWidth: 800 },
+                  jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+                };
+                
+                html2pdf().set(opt).from(element).save().then(() => {
+                    // Restore buttons after printing
+                    downloadBtn.parentElement.style.display = 'flex';
+                });
+            });
+        }
+
+        // Back to top
+
+        const backBtn = document.getElementById('backTop');
+        window.addEventListener('scroll', () => {
+            if(lastScrollY > 400) backBtn.classList.add('visible');
+            else backBtn.classList.remove('visible');
+        });
+        backBtn.addEventListener('click', () => {
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        });
+
+        // Mobile Nav
+        const hamburger = document.getElementById('hamburger');
+        const mobileNav = document.getElementById('mobileNav');
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            mobileNav.classList.toggle('open');
+        });
+        mobileNav.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                mobileNav.classList.remove('open');
+            });
+        });
+    </script>
+    <!-- WhatsApp Floating Widget -->
+    <a href="https://wa.me/918376868838?text=Hi%20Acrux%20Gym!%20I%20would%20like%20to%20know%20more%20about%20your%20memberships." target="_blank" id="wa-widget" style="position: fixed; bottom: 30px; right: 30px; width: 64px; height: 64px; background: #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 24px rgba(37, 211, 102, 0.4); z-index: 9999; cursor: pointer; transition: transform 0.3s ease;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="#ffffff"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.888-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.347-.272.297-1.04 1.016-1.04 2.479 0 1.463 1.065 2.876 1.213 3.074.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+    </a>
+    <script>
+        document.getElementById('wa-widget').addEventListener('mouseover', function() { this.style.transform = 'scale(1.1)'; });
+        document.getElementById('wa-widget').addEventListener('mouseout', function() { this.style.transform = 'scale(1)'; });
+    </script>
+</body>
+</html>
