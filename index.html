@@ -77,11 +77,12 @@
         @media (max-width: 1024px) { * { cursor: auto !important; } #cur-dot, #cur-ring { display: none !important; } }
         
         html { scroll-behavior: smooth; }
+        html, body { overflow-x: hidden; width: 100%; position: relative; }
         body {
             font-family: 'Cormorant Garamond', serif;
             background-color: var(--bg);
             color: var(--text);
-            overflow-x: hidden;
+            max-width: 100vw;
         }
 
         /* High Performance Transitions - ONLY targeting specific elements to prevent layout thrashing */
@@ -145,7 +146,7 @@
         .mobile-nav .nav-link { font-family: 'Playfair Display', serif; font-size: 32px; letter-spacing: normal; text-transform: none; }
 
         /* Typography & Globals */
-        .h2-title { font-family: 'Playfair Display', serif; font-weight: 900; font-size: clamp(34px, 4vw, 50px); line-height: 1.1; margin-bottom: 24px; transition: color 0.38s ease; }
+        .h2-title { font-family: 'Playfair Display', serif; font-weight: 900; font-size: clamp(28px, 6vw, 50px); line-height: 1.1; margin-bottom: 24px; transition: color 0.38s ease; }
         .body-text { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 19px; line-height: 1.78; color: var(--text2); margin-bottom: 40px; transition: color 0.38s ease; }
         .text-center { text-align: center; }
         .section { padding: 120px 48px; max-width: 1200px; margin: 0 auto; }
@@ -351,14 +352,14 @@
         @media (max-width: 768px) {
             .nav-links, .btn-join { display: none; }
             .hamburger { display: flex; }
-            .about-grid, .contact-grid, .arnold-grid { grid-template-columns: 1fr; gap: 48px; }
-            .programs-grid, .trainers-grid { grid-template-columns: 1fr; gap: 32px; }
-            .counters-row { grid-template-columns: 1fr 1fr; gap: 32px; }
-            .f-grid { grid-template-columns: 1fr; gap: 40px; }
+            .about-grid, .contact-grid, .arnold-grid { grid-template-columns: 1fr; gap: 40px; }
+            .programs-grid, .trainers-grid { grid-template-columns: 1fr; gap: 24px; }
+            .counters-row { grid-template-columns: 1fr 1fr; gap: 24px; }
+            .f-grid { grid-template-columns: 1fr; gap: 32px; }
             .p-extra-grid { grid-template-columns: 1fr; }
-            .hero { padding-top: 54px; }
-            .hero-img-wrap { height: 60vh; }
-            .hero-headline { font-size: clamp(32px, 12vw, 64px); padding: 0 12px; }
+            .hero { padding-top: 54px; min-height: 85vh; }
+            .hero-img-wrap { height: 65vh; }
+            .hero-headline { font-size: clamp(34px, 10vw, 64px); padding: 0 16px; margin-top: -30px; }
             .fc-1 { top: 15%; left: 5%; transform: scale(0.8); }
             .fc-2 { top: 15%; right: 5%; transform: scale(0.8); }
             .fc-3 { bottom: 5%; left: 5%; transform: scale(0.8); }
@@ -370,29 +371,34 @@
             .theme-toggle { top: 16px; right: 70px; }
             .mute-btn { top: 12px; left: 16px; }
             .pricing-card { padding: 32px 20px; }
-            .stats-bar { flex-direction: column; gap: 24px; padding: 24px; margin: -32px auto 48px auto; width: 90%; }
+            .stats-bar { flex-direction: column; gap: 24px; padding: 24px; margin: -32px auto 48px auto; width: 90%; max-width: 100%; box-sizing: border-box; }
             .stat-item { border-right: none; padding: 0; border-bottom: 1px solid var(--border); padding-bottom: 24px; width: 100%; }
             .stat-item:last-child { border-bottom: none; padding-bottom: 0; }
             .arnold-img-wrap { height: 300px; }
             .arnold-quote { font-size: 18px; padding: 24px 20px 32px; margin-top: -40px; }
             .f-card:hover { transform: scale(0.85) translateY(-10px) !important; }
-            .maker-card { padding: 24px 20px !important; }
-            .testi-card { width: 300px; padding: 24px; }
-            .footer { padding: 60px 20px 32px; }
+            .maker-card { padding: 24px 16px !important; }
+            .testi-card { width: 300px; padding: 24px; max-width: 90vw; }
+            .footer { padding: 60px 24px 32px; width: 100%; box-sizing: border-box; }
             .c-input { font-size: 16px; padding: 14px 16px; }
         }
         @media (max-width: 480px) {
-            .h2-title { font-size: 32px; margin-bottom: 16px; }
-            .body-text { font-size: 17px; margin-bottom: 32px; }
-            .section, .section-bg2 { padding: 50px 16px; }
+            .h2-title { font-size: 28px; margin-bottom: 16px; }
+            .body-text { font-size: 17px; margin-bottom: 32px; line-height: 1.6; }
+            .section, .section-bg2 { padding: 48px 16px; }
             .navbar { padding: 0 16px; }
             .btn-primary { padding: 14px 24px; font-size: 11px; }
-            .stats-bar { width: 95%; padding: 20px; }
-            .hero-img-wrap { height: 55vh; }
+            .hero-headline { font-size: clamp(26px, 11vw, 42px); padding: 0 12px; margin-top: -40px; gap: 8px; }
+            .hero-headline .line-inner { gap: 8px; flex-wrap: wrap; justify-content: center; }
+            .hero-headline .word { flex: 0 0 auto; line-height: 1.1; }
+            .hero-img-wrap { height: 50vh; }
+            .stats-bar { width: 95%; padding: 20px; margin: -24px auto 40px auto; }
             .t-card { height: 420px; }
-            .maker-card { padding: 20px 16px !important; }
+            .maker-card { padding: 20px 12px !important; }
             .achip { font-size: 12px; padding: 8px 14px; }
             .ex-card { padding: 12px; }
+            .testi-card { width: 280px; padding: 20px; }
+            .footer { padding: 48px 16px 24px; }
         }
         @media (min-width: 769px) and (max-width: 1024px) {
             .programs-grid { grid-template-columns: 1fr 1fr; }
@@ -867,13 +873,13 @@
                 <div class="t-card reveal from-left d1">
                     <div class="t-inner">
                         <div class="t-face t-front">
-                            <div class="t-avatar" style="animation-delay: 0s">RS</div>
-                            <h3 class="t-name">Rohit Sharma</h3>
+                            <div class="t-avatar" style="animation-delay: 0s">NT</div>
+                            <h3 class="t-name">Nipun Thakur</h3>
                             <div class="t-title">Head Strength Trainer</div>
                             <div class="t-hint">hover to see bio</div>
                         </div>
                         <div class="t-face t-back">
-                            <h3 class="t-back-name">Rohit Sharma</h3>
+                            <h3 class="t-back-name">Nipun Thakur</h3>
                             <p class="t-back-bio">Rohit has been lifting competitively since age 18 and has trained over 150 members at Acrux. He specializes in helping beginners build a solid foundation and takes intermediate lifters to the next level.</p>
                             <div class="t-tags">
                                 <span class="t-tag">Strength Training</span><span class="t-tag">Powerlifting</span>
@@ -904,12 +910,12 @@
                     <div class="t-inner">
                         <div class="t-face t-front">
                             <div class="t-avatar" style="animation-delay: 1.2s">AM</div>
-                            <h3 class="t-name">Arjun Mehta</h3>
-                            <div class="t-title">Cardio &amp; Fat Loss Coach</div>
+                            <h3 class="t-name">Mr. Anmol</h3>
+                            <div class="t-title">Owner &amp; Head Coach</div>
                             <div class="t-hint">hover to see bio</div>
                         </div>
                         <div class="t-face t-back">
-                            <h3 class="t-back-name">Arjun Mehta</h3>
+                            <h3 class="t-back-name">Mr. Anmol</h3>
                             <p class="t-back-bio">Arjun holds a diploma in sports nutrition and has helped dozens of members achieve significant weight loss through structured cardio programming and diet guidance.</p>
                             <div class="t-tags">
                                 <span class="t-tag">Cardio</span><span class="t-tag">Fat Loss</span>
@@ -1748,6 +1754,7 @@
             });
             
             function executePDF() {
+                window.scrollTo(0, 0); // Fix blank PDF bug by resetting scroll before capture
                 const element = document.getElementById('advPlanResult');
                 downloadBtn.parentElement.style.display = 'none';
                 
@@ -1772,7 +1779,7 @@
                   margin:       0.5,
                   filename:     'Acrux_Gym_Workout_Plan.pdf',
                   image:        { type: 'jpeg', quality: 1.0 },
-                  html2canvas:  { scale: 2, backgroundColor: '#16161a', useCORS: true },
+                  html2canvas:  { scale: 2, backgroundColor: '#16161a', useCORS: true, scrollY: 0, scrollX: 0, windowWidth: document.documentElement.offsetWidth, windowHeight: document.documentElement.offsetHeight },
                   jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
                 };
                 
