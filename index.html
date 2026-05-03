@@ -2,7 +2,7 @@
 <html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Acrux Gym | Ghaziabad</title>
     <meta name="description" content="A real gym for real people in Vishnu Garden, Loni, Ghaziabad. Expert trainers, solid equipment, and a community that pushes you forward.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -357,23 +357,42 @@
             .f-grid { grid-template-columns: 1fr; gap: 40px; }
             .p-extra-grid { grid-template-columns: 1fr; }
             .hero { padding-top: 54px; }
-            .hero-img-wrap { height: 70vh; }
-            .hero-headline { font-size: clamp(40px, 12vw, 64px); padding: 0 16px; }
+            .hero-img-wrap { height: 60vh; }
+            .hero-headline { font-size: clamp(32px, 12vw, 64px); padding: 0 12px; }
             .fc-1 { top: 15%; left: 5%; transform: scale(0.8); }
             .fc-2 { top: 15%; right: 5%; transform: scale(0.8); }
             .fc-3 { bottom: 5%; left: 5%; transform: scale(0.8); }
             .fc-4 { bottom: 5%; right: 5%; transform: scale(0.8); }
-            .section, .section-bg2 { padding: 80px 24px; }
-            .navbar { padding: 0 24px; }
+            .section, .section-bg2 { padding: 60px 20px; }
+            .navbar { padding: 0 20px; }
+            .navbar.scrolled { backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
             .nav-inner { margin-left: 0; margin-right: 0; }
             .theme-toggle { top: 16px; right: 70px; }
             .mute-btn { top: 12px; left: 16px; }
-            .pricing-card { padding: 40px 24px; }
-            .stats-bar { flex-wrap: wrap; gap: 32px; padding: 24px; margin: -32px auto 48px auto; }
-            .stat-item { border-right: none; padding: 0; min-width: 40%; }
+            .pricing-card { padding: 32px 20px; }
+            .stats-bar { flex-direction: column; gap: 24px; padding: 24px; margin: -32px auto 48px auto; width: 90%; }
+            .stat-item { border-right: none; padding: 0; border-bottom: 1px solid var(--border); padding-bottom: 24px; width: 100%; }
+            .stat-item:last-child { border-bottom: none; padding-bottom: 0; }
             .arnold-img-wrap { height: 300px; }
-            .arnold-quote { font-size: 18px; padding: 24px 24px 32px; margin-top: -40px; }
+            .arnold-quote { font-size: 18px; padding: 24px 20px 32px; margin-top: -40px; }
             .f-card:hover { transform: scale(0.85) translateY(-10px) !important; }
+            .maker-card { padding: 24px 20px !important; }
+            .testi-card { width: 300px; padding: 24px; }
+            .footer { padding: 60px 20px 32px; }
+            .c-input { font-size: 16px; padding: 14px 16px; }
+        }
+        @media (max-width: 480px) {
+            .h2-title { font-size: 32px; margin-bottom: 16px; }
+            .body-text { font-size: 17px; margin-bottom: 32px; }
+            .section, .section-bg2 { padding: 50px 16px; }
+            .navbar { padding: 0 16px; }
+            .btn-primary { padding: 14px 24px; font-size: 11px; }
+            .stats-bar { width: 95%; padding: 20px; }
+            .hero-img-wrap { height: 55vh; }
+            .t-card { height: 420px; }
+            .maker-card { padding: 20px 16px !important; }
+            .achip { font-size: 12px; padding: 8px 14px; }
+            .ex-card { padding: 12px; }
         }
         @media (min-width: 769px) and (max-width: 1024px) {
             .programs-grid { grid-template-columns: 1fr 1fr; }
@@ -417,7 +436,6 @@
         .ex-body strong { color: var(--text); }
 
     </style>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </head>
 <body>
 
@@ -1149,33 +1167,45 @@
         let mx = 0, my = 0, rx = 0, ry = 0;
         let isHovering = false;
         let currentScale = 1, targetScale = 1;
+        let cursorTicking = false;
 
         if (window.innerWidth > 1024 && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            function loopCursor() {
+                rx += (mx - rx) * 0.12;
+                ry += (my - ry) * 0.12;
+                currentScale += (targetScale - currentScale) * 0.12;
+                ring.style.transform = `translate(${rx}px, ${ry}px) scale(${currentScale})`;
+                
+                if (Math.abs(mx - rx) < 0.1 && Math.abs(my - ry) < 0.1 && Math.abs(targetScale - currentScale) < 0.01) {
+                    cursorTicking = false;
+                } else {
+                    requestAnimationFrame(loopCursor);
+                }
+            }
+            
             document.addEventListener('mousemove', e => {
                 mx = e.clientX;
                 my = e.clientY;
                 dot.style.transform = `translate(${mx}px, ${my}px)`;
+                if(!cursorTicking) {
+                    cursorTicking = true;
+                    requestAnimationFrame(loopCursor);
+                }
             });
             document.addEventListener('mouseover', e => {
                 if(e.target.closest('button') || e.target.closest('a') || e.target.closest('.prog-card') || e.target.closest('.chip') || e.target.closest('.t-card') || e.target.closest('.arnold-card')) {
                     document.body.classList.add('cursor-active');
                     targetScale = 1.5;
+                    if(!cursorTicking) { cursorTicking = true; requestAnimationFrame(loopCursor); }
                 }
             });
             document.addEventListener('mouseout', e => {
                 if(e.target.closest('button') || e.target.closest('a') || e.target.closest('.prog-card') || e.target.closest('.chip') || e.target.closest('.t-card') || e.target.closest('.arnold-card')) {
                     document.body.classList.remove('cursor-active');
                     targetScale = 1;
+                    if(!cursorTicking) { cursorTicking = true; requestAnimationFrame(loopCursor); }
                 }
             });
-            function loopCursor() {
-                rx += (mx - rx) * 0.12;
-                ry += (my - ry) * 0.12;
-                currentScale += (targetScale - currentScale) * 0.12;
-                ring.style.transform = `translate(${rx}px, ${ry}px) scale(${currentScale})`;
-                requestAnimationFrame(loopCursor);
-            }
-            requestAnimationFrame(loopCursor);
         }
 
         // Scroll Progress & Navbar optimized
@@ -1193,6 +1223,11 @@
             if(docHeight > 0) progBar.style.width = (lastScrollY / docHeight * 100) + '%';
             if(lastScrollY > 80) navbar.classList.add('scrolled');
             else navbar.classList.remove('scrolled');
+            const backBtn = document.getElementById('backTop');
+            if(backBtn) {
+                if(lastScrollY > 400) backBtn.classList.add('visible');
+                else backBtn.classList.remove('visible');
+            }
             ticking = false;
         }
 
@@ -1691,37 +1726,69 @@
             advForm.style.display = 'block';
         });
 
-        // PDF Download logic
+        // PDF Download logic (Lazy Loaded for 0ms Input Delay)
         const downloadBtn = document.getElementById('downloadPdfBtn');
         if(downloadBtn) {
             downloadBtn.addEventListener('click', () => {
-                const element = document.getElementById('advPlanResult');
+                const originalText = downloadBtn.innerText;
+                downloadBtn.innerText = "Loading PDF Engine...";
                 
-                // Hide buttons before printing
+                if(typeof html2pdf === 'undefined') {
+                    const script = document.createElement('script');
+                    script.src = "https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js";
+                    script.onload = () => {
+                        downloadBtn.innerText = originalText;
+                        executePDF();
+                    };
+                    document.body.appendChild(script);
+                } else {
+                    downloadBtn.innerText = originalText;
+                    executePDF();
+                }
+            });
+            
+            function executePDF() {
+                const element = document.getElementById('advPlanResult');
                 downloadBtn.parentElement.style.display = 'none';
+                
+                const originalBg = element.style.backgroundColor;
+                const originalColor = element.style.color;
+                const originalPad = element.style.padding;
+                
+                element.style.backgroundColor = '#16161a';
+                element.style.color = '#f5f0e8';
+                element.style.padding = '20px';
+
+                const childrenToFix = element.querySelectorAll('span, h3, h4, div, strong, p');
+                const oldColors = [];
+                childrenToFix.forEach((child, idx) => {
+                    oldColors[idx] = child.style.color;
+                    if(!child.style.color || child.style.color === '') {
+                        child.style.color = '#f5f0e8';
+                    }
+                });
                 
                 const opt = {
                   margin:       0.5,
                   filename:     'Acrux_Gym_Workout_Plan.pdf',
-                  image:        { type: 'jpeg', quality: 0.98 },
-                  html2canvas:  { scale: 2, windowWidth: 800 },
+                  image:        { type: 'jpeg', quality: 1.0 },
+                  html2canvas:  { scale: 2, backgroundColor: '#16161a', useCORS: true },
                   jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
                 };
                 
                 html2pdf().set(opt).from(element).save().then(() => {
-                    // Restore buttons after printing
                     downloadBtn.parentElement.style.display = 'flex';
+                    element.style.backgroundColor = originalBg;
+                    element.style.color = originalColor;
+                    element.style.padding = originalPad;
+                    childrenToFix.forEach((child, idx) => { child.style.color = oldColors[idx]; });
                 });
-            });
+            }
         }
 
         // Back to top
 
         const backBtn = document.getElementById('backTop');
-        window.addEventListener('scroll', () => {
-            if(lastScrollY > 400) backBtn.classList.add('visible');
-            else backBtn.classList.remove('visible');
-        });
         backBtn.addEventListener('click', () => {
             window.scrollTo({top: 0, behavior: 'smooth'});
         });
